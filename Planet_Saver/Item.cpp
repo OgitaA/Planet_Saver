@@ -9,6 +9,8 @@ Item::Item(String _name, double _x, double _y) {
 	rect = Rect(_x, _y, 100, 100);
 
 	speed = 300;
+
+	
 }
 
 void Item::set_type() {

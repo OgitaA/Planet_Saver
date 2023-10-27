@@ -1,6 +1,6 @@
 ﻿種類,出現時間,名前,移動パターン,X座標,Y座標,HP,スコア,アイテム
-E,2,normal,normal,1800,400,3,300,紙
-E,3,normal,normal,1800,500,3,300,紙
-E,5,normal,normal,1800,600,3,300,紙
-E,3,normal,normal,1800,800,3,300,紙
-I,5,紙,,1000,500,,,
+E,2,normal,normal,1800,400,3,300,paper
+E,3,normal,normal,1800,500,3,300,paper
+E,5,normal,normal,1800,600,3,300,paper
+E,3,normal,normal,1800,800,3,300,paper
+I,5,paper,,1000,500,,,

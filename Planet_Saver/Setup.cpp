@@ -132,7 +132,7 @@ void Game::load_image() {
 	TextureAsset::Register(U"recycle", U"image/battle/object/item/recycle.png");
 	TextureAsset::Load(U"recycle_item");
 
-	TextureAsset::Register(U"item_paper", U"image / battle / object / item /paper.png");
+	TextureAsset::Register(U"item_paper", U"image/battle/object/item/paper.png");
 	TextureAsset::Load(U"item_paper");
 
 	//Battle_UI

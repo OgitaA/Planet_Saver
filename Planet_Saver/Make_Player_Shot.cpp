@@ -20,5 +20,5 @@ void Game::make_player_shot() {
 
 void Game::make_player_bullet(String _name, double _x, double _y, double _r, int _power, double _speed) {
 
-	player_bullet.push_back(Player_Bullet(_name, _x, _y, _r, _power, _speed));
+	player_bullet.push_back(Player_Bullet(_name, _x, _y+30, _r, _power, _speed));
 }

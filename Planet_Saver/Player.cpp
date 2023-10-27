@@ -153,14 +153,18 @@ void Player::change_mode() {
 
 	if (KeyShift.down()) {
 
-		if (mode == U"burn") {
-			mode = U"non_burn";
-		}
-		else if (mode == U"non_burn") {
-			mode = U"recycle";
-		}
-		else if (mode == U"recycle") {
-			mode = U"burn";
+		//キャッチャー起動中は使えない
+		if (catcher.get_operation() == true) {
+
+			if (mode == U"burn") {
+				mode = U"non_burn";
+			}
+			else if (mode == U"non_burn") {
+				mode = U"recycle";
+			}
+			else if (mode == U"recycle") {
+				mode = U"burn";
+			}
 		}
 	}
 }

@@ -22,7 +22,7 @@ void Game::update_battle() {
 	update_item(d_time);
 
 	//プレイヤーvsアイテム
-	//player_catcher_vs_item();
+	player_catcher_vs_item();
 
 	//アイテム削除
 	delete_item();
@@ -330,9 +330,17 @@ void Game::player_catcher_vs_item() {
 
 			String name = i.get_name();
 
-			score += 100;
+			//キャッチャーに空きがある
+			if(player.check_catcher_full()==false){
 
-			return true;
+				player.plus_catcher_item(name);
+
+				return true;
+			}
+			else {
+				return false;
+			}
+
 		}
 		else {
 			return false;

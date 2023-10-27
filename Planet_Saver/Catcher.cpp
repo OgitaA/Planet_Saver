@@ -10,7 +10,7 @@ void Catcher::reset() {
 
 	move_y = 0;
 
-	
+	item.clear();
 }
 
 void Catcher::first(double _p_x, double _p_y) {
@@ -83,9 +83,61 @@ void Catcher::update(double _d_time, double _p_x, double _p_y, String _mode) {
 
 void Catcher::draw() {
 
+	//キャッチしたゴミ
+
+	class Item_Data {
+	  public:
+		  String name = U"";
+		  int x = 0;
+	};
+
+
+
+	Array<Item_Data> item_data;
+
+	for (size_t i = 0; i < item.size();i++) {
+
+		item_data.push_back(Item_Data());
+
+
+		String item_name = U"item_" + item[i];
+
+		item_data[i].name = item_name;
+
+
+
+		int x = hit_rect.x + rect.w / 2 - (100 * 0.5 / 2);
+
+		//center
+		if (i == 0) {
+			
+		}
+		else if (i == 1) {
+			x -= 50/2;
+		}
+		else if (i == 2) {
+			x += 50 / 2;
+		}
+
+		item_data[i].x = x;
+	}
+
+	int item_y = hit_rect.y - (100 * 0.5 / 2);
+
+	for (size_t i = item_data.size(); i >0; i--) {
+
+		int index = i - 1;
+
+		String item_name = item_data[index].name;
+		int item_x = item_data[index].x;
+
+		TextureAsset(item_name).scaled(0.5).draw(item_x,item_y);
+	}
+
 	String image_name = U"net_" + mode;
 
 	TextureAsset(image_name).draw(rect.x, rect.y);
 
-	//hit_rect.drawFrame(5,Palette::Blue);
+	//hit_rect.drawFrame(5, Palette::Blue);
+
 }

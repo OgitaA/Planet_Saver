@@ -28,4 +28,6 @@ private:
 	RectF rect;
 
 	double speed;
+
+	
 };

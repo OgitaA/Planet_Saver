@@ -23,7 +23,19 @@ public:
 
 	RectF get_hit_rect() { return hit_rect; }
 
-	void get_() {}
+	bool get_operation() {return  operation; }
+
+	void plus_item(String v) { item.push_back(v); }
+
+	bool check_full_item(){
+
+		if (item.size() >= item_max) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
 private:
 
@@ -45,4 +57,10 @@ private:
 	RectF hit_rect;
 
 	String mode = U"burn";
+
+	//キャッチしたアイテム
+
+	Array<String> item;
+
+	int item_max = 3;
 };

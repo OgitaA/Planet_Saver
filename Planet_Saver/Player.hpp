@@ -34,6 +34,8 @@ public:
 
 	RectF get_catcher_hit_rect() { return catcher.get_hit_rect(); }
 
+	void plus_catcher_item(String v) {	catcher.plus_item(v);}
+	bool check_catcher_full() {return catcher.check_full_item(); }
 
 private:
 
