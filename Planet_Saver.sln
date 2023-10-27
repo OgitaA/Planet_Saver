@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Planet_Saver", "Planet_Saver\Planet_Saver.vcxproj", "{70CAB860-4F70-4987-830C-93AFF5BD6301}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70CAB860-4F70-4987-830C-93AFF5BD6301}.Debug|x64.ActiveCfg = Debug|x64
+		{70CAB860-4F70-4987-830C-93AFF5BD6301}.Debug|x64.Build.0 = Debug|x64
+		{70CAB860-4F70-4987-830C-93AFF5BD6301}.Release|x64.ActiveCfg = Release|x64
+		{70CAB860-4F70-4987-830C-93AFF5BD6301}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CEB63D37-6650-4664-96B6-DCA91FAAC080}
+	EndGlobalSection
+EndGlobal
