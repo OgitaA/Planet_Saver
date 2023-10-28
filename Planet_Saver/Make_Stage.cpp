@@ -14,8 +14,8 @@ void Game::make_stage(int _stage) {
 	back_object.clear();
 	back_object_data.clear();
 
-	//エネミーデータをロード
-	load_enemy_data(_stage);
+	//ステージデータをロード
+	load_stage_data(_stage);
 
 	//背景画像を設定
 	back.set_stage(_stage);
@@ -39,7 +39,7 @@ void Game::make_stage(int _stage) {
 	}
 }
 
-void Game::load_enemy_data(int _stage) {
+void Game::load_stage_data(int _stage) {
 
 
 	String adress = U"data/" + Format(_stage) + U"/stage.csv";
@@ -110,7 +110,7 @@ void Game::load_enemy_data(int _stage) {
 
 			emerge_enemy.push_back(Emerge_Enemy(stage_time, name, pattern, pos_x, pos_y, hp, score, item));
 
-
+		
 		}
 
 		//Item
@@ -139,9 +139,10 @@ void Game::load_enemy_data(int _stage) {
 
 			emerge_item.push_back(Emerge_Item(stage_time, name, pos_x, pos_y));
 
+		
 		}
 
-
+	
 
 	}
 

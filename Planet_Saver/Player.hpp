@@ -34,8 +34,36 @@ public:
 
 	RectF get_catcher_hit_rect() { return catcher.get_hit_rect(); }
 
-	void plus_catcher_item(String v) {	catcher.plus_item(v);}
+	void plus_catcher_item(String _v, String _type) { catcher.plus_item(_v, _type); }
 	bool check_catcher_full() {return catcher.check_full_item(); }
+
+	//キャッチャーのアイテムをエネルギーに変換
+	void convert_catcher_item();
+
+	void plus_burn_gauge();
+	void plus_non_burn_gauge();
+	void plus_recycle_gauge();
+
+	void clear_catcher_item() { catcher.clear_item(); }
+
+
+	//キャッチャー
+	bool check_catcher_use() {
+
+		if (catcher.get_operation()==true) {
+
+			if (catcher.get_move_y() > 25) {
+
+				return true;
+
+			}
+		}
+
+		return false;
+	}
+
+	void catcher_error();
+
 
 private:
 
@@ -57,7 +85,10 @@ private:
 	int non_burn_gauge = 0;
 	int recycle_gauge = 0;
 
+	double burn_decrease_count = 0;
+	double non_burn_decrease_count = 0;
+	double recycle_decrease_count = 0;
 
-
+	double catch_error_count = 0;
 
 };

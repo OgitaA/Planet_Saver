@@ -14,6 +14,7 @@ public:
 
 	RectF get_rect() { return rect; }
 	String get_name() { return name; }
+	String get_type() { return type; }
 
 	void move();
 

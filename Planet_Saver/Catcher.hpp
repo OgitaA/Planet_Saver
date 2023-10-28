@@ -25,7 +25,7 @@ public:
 
 	bool get_operation() {return  operation; }
 
-	void plus_item(String v) { item.push_back(v); }
+	void plus_item(String _name,String _type) { item.push_back(Item(_name,_type)); }
 
 	bool check_full_item(){
 
@@ -36,6 +36,16 @@ public:
 			return false;
 		}
 	}
+
+	size_t get_item_size() { return item.size(); }
+	String get_status() { return status; }
+	int get_move_y() { return move_y; }
+	void get_item_name(){}
+	String get_item_type(int index) {return item[index].type; }
+
+	void clear_item() { item.clear(); }
+
+	void set_error(bool v) { error = v; }
 
 private:
 
@@ -60,7 +70,16 @@ private:
 
 	//キャッチしたアイテム
 
-	Array<String> item;
+	class Item {
+	public:
+		String name;
+		String type;
+	};
+
+	Array<Item> item;
 
 	int item_max = 3;
+
+	bool error = false;
+	
 };

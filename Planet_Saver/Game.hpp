@@ -67,7 +67,7 @@ public:
 	void update_battle();
 	void draw_battle();
 
-
+	void load_stage_data(int);
 
 	Player player;
 	Array<Player_Bullet> player_bullet;
@@ -83,7 +83,7 @@ public:
 
 	//Player
 	void make_player_shot();
-	void make_player_bullet(String, double, double, double, int, double);
+	void make_player_bullet(String, double, double, double, int, double,double);
 
 	void delete_player_bullet();
 
@@ -95,12 +95,11 @@ public:
 	//Enemy
 	void make_enemy();
 	void update_enemy(double);
-	void load_enemy_data(int);
 	void draw_enemy();
 	void delete_enemy();
 
 	void make_enemy_shot();
-	void make_enemy_bullet(String, double, double, double, int, double);
+	void make_enemy_bullet(String, double, double, double, int, double,double);
 
 	void delete_enemy_bullet();
 

@@ -1,6 +1,6 @@
 ﻿#include"Enemy_Bullet.hpp"
 
-Enemy_Bullet::Enemy_Bullet(String _name, double _x, double _y, double _r, int _power, double _speed) {
+Enemy_Bullet::Enemy_Bullet(String _name, double _x, double _y, double _r, int _power, double _speed,double _angle) {
 
 	name = _name;
 
@@ -9,6 +9,8 @@ Enemy_Bullet::Enemy_Bullet(String _name, double _x, double _y, double _r, int _p
 	speed = _speed;
 
 	power = _power;
+
+	angle = _angle;
 
 }
 
@@ -33,5 +35,6 @@ void Enemy_Bullet::move() {
 
 void Enemy_Bullet::move_normal() {
 
-	circle.x -= speed * d_time;
+	circle.x += cos(angle) * speed * d_time;
+	circle.y += sin(angle) * speed * d_time;
 }

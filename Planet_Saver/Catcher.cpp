@@ -28,7 +28,11 @@ void Catcher::update(double _d_time, double _p_x, double _p_y, String _mode) {
 	if (operation == false) {
 
 		if (KeyZ.down()) {
-			operation = true;
+
+			if (error == false) {
+
+				operation = true;
+			}
 		}
 	}
 
@@ -100,7 +104,7 @@ void Catcher::draw() {
 		item_data.push_back(Item_Data());
 
 
-		String item_name = U"item_" + item[i];
+		String item_name = U"item_" + item[i].name;
 
 		item_data[i].name = item_name;
 

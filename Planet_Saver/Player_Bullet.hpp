@@ -6,7 +6,7 @@ class Player_Bullet {
 
 public:
 
-	Player_Bullet(String, double, double, double, int, double);
+	Player_Bullet(String, double, double, double, int, double,double);
 
 	void update(double);
 	void draw();
@@ -29,4 +29,5 @@ private:
 
 	int power;
 
+	double angle;
 };

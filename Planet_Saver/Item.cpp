@@ -18,6 +18,7 @@ void Item::set_type() {
 	if (U"paper" == name) {
 
 		type = U"burn";
+		
 	}
 	else if (U"" == name) {
 

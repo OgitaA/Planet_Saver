@@ -6,7 +6,7 @@ class Enemy_Bullet {
 
 public:
 
-	Enemy_Bullet(String, double, double, double, int, double);
+	Enemy_Bullet(String, double, double, double, int, double,double);
 
 	void update(double);
 	void draw();
@@ -28,5 +28,7 @@ private:
 	double speed;
 
 	int power;
+
+	double angle;
 
 };

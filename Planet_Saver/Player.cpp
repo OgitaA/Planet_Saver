@@ -16,7 +16,7 @@ void Player::reset() {
 	muteki_count = 0;
 	shot_cool_time = 0;
 
-	burn_gauge = 2;
+	burn_gauge = 0;
 	non_burn_gauge = 3;
 	recycle_gauge = 4;
 
@@ -48,10 +48,20 @@ void Player::update(double _d_time) {
 	//キャッチャー
 	catcher.update(d_time, rect.x, rect.y, mode);
 	
+	convert_catcher_item();
 
 
 
+	if (catch_error_count > 0) {
 
+		catch_error_count -= d_time;
+		catcher.set_error(true);
+	}
+	else {
+		catcher.set_error(false);
+	}
+
+	//Print << U"catcher_count::" << catch_error_count;
 }
 
 void Player::draw() {
@@ -154,7 +164,7 @@ void Player::change_mode() {
 	if (KeyShift.down()) {
 
 		//キャッチャー起動中は使えない
-		if (catcher.get_operation() == true) {
+		if (catcher.get_operation() == false) {
 
 			if (mode == U"burn") {
 				mode = U"non_burn";
@@ -169,4 +179,91 @@ void Player::change_mode() {
 	}
 }
 
+void Player::convert_catcher_item() {
 
+	//キャッチャーにアイテムがある
+	if (catcher.get_item_size() >= 1) {
+
+		//キャッチャー上昇中
+		if (catcher.get_status() == U"up") {
+
+			//キャッチャーが自機と重なりかけた
+			if (catcher.get_move_y() <= 25) {
+
+				for (size_t i = 0; i < catcher.get_item_size(); i++) {
+
+					String type = catcher.get_item_type(i);
+
+					if (mode == U"burn") {
+
+						if (type == U"burn") {
+							plus_burn_gauge();
+						}
+						else {
+							catcher_error();
+						}
+					}
+					else if (mode == U"non_burn") {
+
+						if (type == U"non_burn") {
+							plus_non_burn_gauge();
+						}
+						else {
+							catcher_error();
+						}
+					}
+					else if (mode == U"recycle") {
+
+						if (type == U"recycle") {
+							plus_recycle_gauge();
+						}
+						{
+							catcher_error();
+						}
+					}
+
+				
+				}
+
+				//キャッチャーのアイテムデータ
+				clear_catcher_item();
+			}
+		
+		}
+	}
+
+}
+
+void Player::plus_burn_gauge() {
+
+	burn_gauge ++;
+
+	if (burn_gauge > 5) {
+		burn_gauge = 5;
+	}
+}
+
+void Player::plus_non_burn_gauge() {
+
+	non_burn_gauge ++;
+
+	if (non_burn_gauge > 5) {
+		non_burn_gauge = 5;
+	}
+}
+
+void Player::plus_recycle_gauge() {
+
+	recycle_gauge ++;
+
+	if (recycle_gauge > 5) {
+		recycle_gauge = 5;
+	}
+}
+
+
+void Player::catcher_error() {
+
+	catch_error_count = 3;
+
+}

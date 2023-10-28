@@ -74,6 +74,7 @@ void Game::update_battle() {
 	//背景モノ更新
 	update_back_object(d_time);
 
+	
 }
 
 void Game::update_player_bullet(double _d_time) {
@@ -323,30 +324,37 @@ void Game::update_item(double _d_time) {
 
 void Game::player_catcher_vs_item() {
 
+	if (player.check_catcher_use() == true) {
 
-	item.remove_if([&](Item i) {
+		item.remove_if([&](Item i) {
 
-		if (player.get_catcher_hit_rect().intersects(i.get_rect())) {
+			//キャッチャーに触れている
+			if (player.get_catcher_hit_rect().intersects(i.get_rect())) {
 
-			String name = i.get_name();
+				String name = i.get_name();
+				String type = i.get_type();
 
-			//キャッチャーに空きがある
-			if(player.check_catcher_full()==false){
+				//キャッチャーに空きがある
+				if (player.check_catcher_full() == false) {
 
-				player.plus_catcher_item(name);
+					player.plus_catcher_item(name, type);
 
-				return true;
+					return true;
+				}
+				else {
+					return false;
+				}
+
 			}
 			else {
 				return false;
 			}
 
-		}
-		else {
-			return false;
-		}
+		});
 
-	});
+	}
+
+
 
 }
 

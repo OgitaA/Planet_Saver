@@ -29,7 +29,7 @@ void Game::set_stage_select_box() {
 
 	make_stage_select_box(1, U"すくえ！都市ゴミ！！");
 	make_stage_select_box(2, U"すくえ！海洋ゴミ！！");
-	make_stage_select_box(3, U"すくえ！宇宙ゴミ！！");
+	make_stage_select_box(3, U"すくえ！産業ゴミ！！");
 }
 
 void Game::make_stage_select_box(int v, String name) {
@@ -134,6 +134,9 @@ void Game::load_image() {
 
 	TextureAsset::Register(U"item_paper", U"image/battle/object/item/paper.png");
 	TextureAsset::Load(U"item_paper");
+
+	TextureAsset::Register(U"item_can", U"image/battle/object/item/can.png");
+	TextureAsset::Load(U"item_can");
 
 	//Battle_UI
 	TextureAsset::Register(U"frame", U"image/battle/UI/status/frame.png");
@@ -244,8 +247,8 @@ void Game::load_font() {
 }
 
 void Game::debug_data() {
-	main_scene = 0;
+	main_scene = 1;
 
 	stage = 1;
-	make_stage(1);
+	
 }
