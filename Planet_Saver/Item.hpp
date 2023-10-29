@@ -10,13 +10,20 @@ public:
 	void update(double);
 	void draw();
 
-	void set_type();
+	void set_data();
 
-	RectF get_rect() { return rect; }
+	
 	String get_name() { return name; }
 	String get_type() { return type; }
 
+	String get_shape() { return shape; }
+	RectF get_rect() { return rect; }
+	Circle get_circle() { return circle; }
+	Quad get_quad();
+
 	void move();
+
+	void draw_shape();
 
 private:
 
@@ -26,9 +33,16 @@ private:
 
 	String type = U"";
 
+	double speed;
+
+	String shape = U"";
+
 	RectF rect;
 
-	double speed;
+	Circle circle;
+
+	Quad quad;
+
 
 	
 };

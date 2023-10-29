@@ -117,10 +117,12 @@
   <ItemGroup>
     <ClCompile Include="Back.cpp" />
     <ClCompile Include="Back_Object.cpp" />
+    <ClCompile Include="Barrier.cpp" />
     <ClCompile Include="Catcher.cpp" />
     <ClCompile Include="Change_Scene.cpp" />
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="Draw_Battle.cpp" />
+    <ClCompile Include="Draw_Develop.cpp" />
     <ClCompile Include="Draw_Game.cpp" />
     <ClCompile Include="Draw_Stage_Select.cpp" />
     <ClCompile Include="Draw_Title.cpp" />
@@ -141,6 +143,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Update_Battle.cpp" />
+    <ClCompile Include="Update_Develop.cpp" />
     <ClCompile Include="Update_Game.cpp" />
     <ClCompile Include="Update_Stage.cpp" />
     <ClCompile Include="Update_Stage_Select.cpp" />
@@ -343,13 +346,16 @@
     <ClInclude Include="Back.hpp" />
     <ClInclude Include="Back_Object.hpp" />
     <ClInclude Include="Back_Object_Data.hpp" />
+    <ClInclude Include="Barrier.hpp" />
     <ClInclude Include="Catcher.hpp" />
+    <ClInclude Include="Develop_Select_Rect.hpp" />
     <ClInclude Include="Emerge_Enemy.hpp" />
     <ClInclude Include="Emerge_Item.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Enemy_Bullet.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="Item.hpp" />
+    <ClInclude Include="Option.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="Player_Bullet.hpp" />
     <ClInclude Include="Stage_Select_Box.hpp" />

@@ -8,6 +8,7 @@ void Game::set_up() {
 	load_music();
 	load_font();
 
+	set_up_develop();
 	debug_data();
 }
 
@@ -97,6 +98,9 @@ void Game::load_image() {
 	TextureAsset::Register(U"net", U"image/battle/object/player/net.png");
 	TextureAsset::Load(U"net");
 
+
+	TextureAsset::Register(U"player_option", U"image/battle/object/player/player_option.png");
+	TextureAsset::Load(U"player_option");
 
 
 	TextureAsset::Register(U"net_burn", U"image/battle/object/player/net_burn.png");
@@ -247,8 +251,39 @@ void Game::load_font() {
 }
 
 void Game::debug_data() {
-	main_scene = 1;
+	main_scene = 999;
 
 	stage = 1;
 	
+}
+
+void Game::set_up_develop() {
+
+	const int edge_x = 1200;
+	const int edge_y = 200;
+	const int size_w = 600;
+	const int size_h = 100;
+
+	const int space_h = 150;
+
+	String name;
+	
+	for (int i = 0; i < 3; i++) {
+
+		int x = edge_x;
+		int y = edge_y + space_h * i;
+
+		if (i == 0) {
+			name = U"Rect";
+		}
+		else if (i == 1) {
+			name = U"Circle";
+		}
+		else if (i == 2) {
+			name = U"Quad";
+		}
+
+		develop_select_rect.push_back(Develop_Select_Rect(x, y, size_w, size_h, name));
+
+	}
 }

@@ -13,7 +13,7 @@ void Game::make_player_shot() {
 
 	if (cool_time <= 0) {
 
-		if (p_power == 0) {
+		
 
 			int r = 30;
 
@@ -25,54 +25,17 @@ void Game::make_player_shot() {
 
 			make_player_bullet(U"normal", shot_x, shot_y, r, power, speed, angle);
 
-			player.set_shot_cool_time(0.3);
+			
 
-		}
+			for (size_t o = 0; o < player.get_option_size();o++) {
 
-		else if (p_power == 1) {
+				double x = player.get_option_pos()[o].x;
+				double y = player.get_option_pos()[o].y;
 
-			int r = 30;
-
-			int shot_x = p_x + 119 + 1 + (r / 2);
-			int shot_y = p_y + 69 / 2;
-			int power = 10;
-			int speed = 800;
-			double angle = 0;
-
-			make_player_bullet(U"normal", shot_x, shot_y, r, power, speed,angle);
-
-			make_player_bullet(U"normal", shot_x, shot_y, r, power, speed, angle + 20);
-
-			make_player_bullet(U"normal", shot_x, shot_y, r, power, speed, angle - 20);
+				make_player_bullet(U"normal", x, y, r, power, speed, angle);
+			}
 
 			player.set_shot_cool_time(0.3);
-
-		}
-
-		else if (p_power == 2) {
-
-			int r = 30;
-
-			int shot_x = p_x + 119 + 1 + (r / 2);
-			int shot_y = p_y + 69 / 2;
-			int power = 10;
-			int speed = 800;
-			double angle = 0;
-
-			make_player_bullet(U"normal", shot_x, shot_y, r, power, speed, angle);
-
-			make_player_bullet(U"normal", shot_x, shot_y, r, power, speed, angle + 20);
-
-			make_player_bullet(U"normal", shot_x, shot_y, r, power, speed, angle - 20);
-
-			make_player_bullet(U"normal", shot_x, shot_y, r, power, speed, angle + 40);
-
-			make_player_bullet(U"normal", shot_x, shot_y, r, power, speed, angle - 40);
-
-			player.set_shot_cool_time(0.3);
-
-		}
-
 	}
 
 }

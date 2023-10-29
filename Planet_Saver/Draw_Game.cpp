@@ -22,6 +22,9 @@ void Game::draw() {
 	case 102:
 		//update_ending();
 		break;
+	case 999:
+		draw_develop();
+		break;
 	default:
 		break;
 	}

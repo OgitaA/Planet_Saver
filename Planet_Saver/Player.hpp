@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include"Catcher.hpp"
+#include"Option.hpp"
+#include"Barrier.hpp"
 
 class Player {
 
@@ -65,6 +67,34 @@ public:
 	void catcher_error();
 
 
+	//パワーアップのコントロール
+	void control_power();
+	void control_speed();
+
+
+	//Option
+	void plus_option();
+	void minus_option();
+
+	void control_option();
+	void adjust_option();
+
+	Barrier barrier;
+
+	Array<Vec2> get_option_pos() {
+
+		Array<Vec2> pos;
+
+		for (auto& o:option) {
+
+			pos.push_back(Vec2(o.get_x() + 28, o.get_y() + 28));
+		}
+
+		return pos;
+	}
+
+	size_t get_option_size() { return option.size(); }
+
 private:
 
 	double d_time;
@@ -91,4 +121,18 @@ private:
 
 	double catch_error_count = 0;
 
+	//Option
+
+	Array<Option> option;
+
+	Array<Vec2> memory_pos;
+
+	double old_x = 0;
+	double old_y = 0;
+
+	bool moved_x = false;
+	bool moved_y = false;
+
+	double option_adjust_x = 118 / 2 - 28;
+	double option_adjust_y = 70 / 2 - 56 / 2;
 };

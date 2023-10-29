@@ -29,6 +29,8 @@ public:
 
 	void straight_move();
 
+	int get_score() { return score; }
+
 private:
 
 	double d_time;
@@ -43,7 +45,7 @@ private:
 
 	int hp;
 
-	int score;
+	int score = 0;
 
 	String item = U"";
 

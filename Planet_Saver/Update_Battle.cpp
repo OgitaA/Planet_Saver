@@ -221,6 +221,8 @@ void Game::delete_enemy() {
 
 			make_item(e.get_item(), e.get_rect().x, e.get_rect().y);
 
+			plus_score(e.get_score());
+
 			return true;
 		}
 		else {
@@ -328,8 +330,35 @@ void Game::player_catcher_vs_item() {
 
 		item.remove_if([&](Item i) {
 
-			//キャッチャーに触れている
-			if (player.get_catcher_hit_rect().intersects(i.get_rect())) {
+            //キャッチャーに触れている
+
+			bool hit = false;
+		    String shape = i.get_shape();
+
+			RectF p_rect = player.get_catcher_hit_rect();
+
+
+			if (shape == U"Rect") {
+
+				if (p_rect.intersects(i.get_rect())) {
+					hit = true;
+				}
+			}
+			else if(shape == U"Circle") {
+
+				if (p_rect.intersects(i.get_rect())) {
+					hit = true;
+				}
+			}
+			else if (shape == U"Quad") {
+
+				if (p_rect.intersects(i.get_quad())) {
+					hit = true;
+				}
+			}
+
+
+			if (hit == true) {
 
 				String name = i.get_name();
 				String type = i.get_type();
@@ -344,6 +373,7 @@ void Game::player_catcher_vs_item() {
 				else {
 					return false;
 				}
+
 
 			}
 			else {
@@ -385,4 +415,11 @@ void Game::update_back_object(double _d_time) {
 }
 
 
+void Game::plus_score(int v) {
 
+	score += v;
+
+	if (score > 99999999) {
+		score = 99999999;
+	}
+}

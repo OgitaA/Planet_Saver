@@ -12,6 +12,8 @@
 #include"Stage_Select_Box.hpp"
 #include"Emerge_Item.hpp"
 
+#include"Develop_Select_Rect.hpp"
+
 
 class Game {
 
@@ -68,6 +70,8 @@ public:
 	void draw_battle();
 
 	void load_stage_data(int);
+
+	void plus_score(int);
 
 	Player player;
 	Array<Player_Bullet> player_bullet;
@@ -198,4 +202,33 @@ public:
 
 	void change_bgm_volume();
 	void change_se_volume();
+
+
+
+	//Develop
+
+	String develop_image_name = U"";
+	String develop_editing_text = U"";
+
+	Array<Develop_Select_Rect> develop_select_rect;
+
+	String develop_shape = U"Rect";
+
+	int develop_rect_scene = 0;
+	Vec2 develop_rect_start = { 0,0 };
+	Vec2 develop_rect_end = { 0,0 };
+
+	int develop_quad_scene = 0;
+	Vec2 develop_quad_1 = { 0,0 };
+	Vec2 develop_quad_2 = { 0,0 };
+	Vec2 develop_quad_3 = { 0,0 };
+	Vec2 develop_quad_4 = { 0,0 };
+
+	int develop_circle_x = 0;
+	int develop_circle_y = 0;
+	int develop_circle_r = 0;
+
+	void set_up_develop();
+	void update_develop();
+	void draw_develop();
 };

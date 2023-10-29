@@ -27,6 +27,9 @@ void Game::update() {
 		case 102:
 			//update_ending();
 			break;
+		case 999:
+			update_develop();
+			break;
 		default:
 			break;
 		}

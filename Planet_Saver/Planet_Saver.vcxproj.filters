@@ -208,6 +208,18 @@
     <Filter Include="Source Files\Game\Title">
       <UniqueIdentifier>{85ac5169-a041-425d-9864-bd619680ad87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\Develop">
+      <UniqueIdentifier>{e4601f86-d97b-4437-b430-18f306390d3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Develop\Develop_Select_Rect">
+      <UniqueIdentifier>{e30055e9-9e58-4b06-9be1-4e221b0fea23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Battle\Object\Player\Option">
+      <UniqueIdentifier>{3c1b79f8-3091-4146-bfef-7441bd339902}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Battle\Object\Player\Barrier">
+      <UniqueIdentifier>{8c43800d-390c-46ef-94e3-a1a30bb0c06d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -290,6 +302,15 @@
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>Source Files\Game\Battle\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Update_Develop.cpp">
+      <Filter>Source Files\Game\Develop</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw_Develop.cpp">
+      <Filter>Source Files\Game\Develop</Filter>
+    </ClCompile>
+    <ClCompile Include="Barrier.cpp">
+      <Filter>Source Files\Game\Battle\Object\Player\Barrier</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -961,6 +982,15 @@
     </ClInclude>
     <ClInclude Include="Catcher.hpp">
       <Filter>Source Files\Game\Battle\Object\Player\Catcher</Filter>
+    </ClInclude>
+    <ClInclude Include="Develop_Select_Rect.hpp">
+      <Filter>Source Files\Game\Develop\Develop_Select_Rect</Filter>
+    </ClInclude>
+    <ClInclude Include="Option.hpp">
+      <Filter>Source Files\Game\Battle\Object\Player\Option</Filter>
+    </ClInclude>
+    <ClInclude Include="Barrier.hpp">
+      <Filter>Source Files\Game\Battle\Object\Player\Barrier</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
