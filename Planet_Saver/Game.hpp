@@ -11,9 +11,14 @@
 #include"Back_Object.hpp"
 #include"Stage_Select_Box.hpp"
 #include"Emerge_Item.hpp"
+#include"Moji_Effect.hpp"
+#include"My_Effect.hpp"
+#include"Gauge_Effect.hpp"
+#include"Gauge_Effect_Data.hpp"
+
 
 #include"Develop_Select_Rect.hpp"
-
+#include"Develop_Kind_Select_Rect.hpp"
 
 class Game {
 
@@ -83,7 +88,9 @@ public:
 	Back back;
 	Array<Back_Object_Data> back_object_data;
 	Array<Back_Object> back_object;
-
+	Array<My_Effect> my_effect;
+	Array<Moji_Effect> moji_effect;
+	Array<Gauge_Effect> gauge_effect;
 
 	//Player
 	void make_player_shot();
@@ -128,6 +135,23 @@ public:
 	void draw_back();
 	void update_back_object(double);
 	void draw_back_object();
+
+	//My_Effect
+	void update_my_effect(double);
+	void draw_my_effect();
+
+	//Moji_Effect
+	void make_moji_effect();
+	void delete_moji_effect();
+	void update_moji_effect(double);
+	void draw_moji_effect();
+
+	//Gauge_Effect
+	void make_gauge_effect();
+	void delete_gauge_effect();
+	void update_gauge_effect(double);
+	void draw_gauge_effect();
+
 
 	//UI
 	void draw_UI();
@@ -211,8 +235,10 @@ public:
 	String develop_editing_text = U"";
 
 	Array<Develop_Select_Rect> develop_select_rect;
+	Array<Develop_Kind_Select_Rect> develop_kind_select_rect;
 
 	String develop_shape = U"Rect";
+	String develop_kind = U"item";
 
 	int develop_rect_scene = 0;
 	Vec2 develop_rect_start = { 0,0 };

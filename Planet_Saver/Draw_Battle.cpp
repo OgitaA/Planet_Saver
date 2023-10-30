@@ -6,11 +6,15 @@ void Game::draw_battle() {
 
 	draw_back_object();
 
+	draw_moji_effect();
+
 	draw_item();
 
 	draw_player_bullet();
 
 	draw_enemy();
+
+	draw_my_effect();
 
 	draw_enemy_bullet();
 
@@ -66,6 +70,20 @@ void Game::draw_item() {
 
 	for (auto& i : item) {
 		i.draw();
+	}
+}
+
+void Game::draw_my_effect() {
+
+	for (auto& e : my_effect) {
+		e.draw();
+	}
+}
+
+void Game::draw_moji_effect() {
+
+	for (auto& e : moji_effect) {
+		e.draw();
 	}
 }
 

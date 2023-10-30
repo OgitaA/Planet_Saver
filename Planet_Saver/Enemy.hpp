@@ -15,7 +15,6 @@ public:
 
 	void each();
 
-	RectF get_rect() { return rect; }
 	void damage(int v) { hp -= v; if (hp < 0) { hp = 0; } }
 	int get_hp() { return hp; }
 	double get_count() { return count; }
@@ -31,13 +30,24 @@ public:
 
 	int get_score() { return score; }
 
+	String get_shape() { return shape; }
+	RectF get_rect() { return rect; }
+	Circle get_circle() { return circle; }
+	Quad get_quad();
+
 private:
 
 	double d_time;
 
 	String name = U"";
 
+	String shape = U"";
+
 	RectF rect;
+
+	Quad quad;
+
+	Circle circle;
 
 	double speed;
 

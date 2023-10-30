@@ -220,6 +220,24 @@
     <Filter Include="Source Files\Game\Battle\Object\Player\Barrier">
       <UniqueIdentifier>{8c43800d-390c-46ef-94e3-a1a30bb0c06d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\Develop\Develop_Kind_Select_Rect">
+      <UniqueIdentifier>{43d9e8aa-d077-4c66-ac32-b160a285285f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Battle\Object\Effect">
+      <UniqueIdentifier>{f0d4fc64-c9c8-4c9f-9da9-cace6ac39d8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Battle\Object\Effect\My_Effect">
+      <UniqueIdentifier>{b37d90d8-f204-4ef0-9e62-b343353fd2c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Battle\Object\Effect\Moji_Effect">
+      <UniqueIdentifier>{5f1d92a0-0f9a-4647-8576-d3f796327a85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Battle\Object\Effect\Gauge_Effect">
+      <UniqueIdentifier>{25bdb5cc-a845-4745-9f12-ecb2965086e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Battle\Object\Player\Gauge_Effect_Data">
+      <UniqueIdentifier>{40ef5247-9023-49c5-bdab-e5126cf65eef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -311,6 +329,12 @@
     </ClCompile>
     <ClCompile Include="Barrier.cpp">
       <Filter>Source Files\Game\Battle\Object\Player\Barrier</Filter>
+    </ClCompile>
+    <ClCompile Include="Moji_Effect.cpp">
+      <Filter>Source Files\Game\Battle\Object\Effect\Moji_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="My_Effect.cpp">
+      <Filter>Source Files\Game\Battle\Object\Effect\My_Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -991,6 +1015,21 @@
     </ClInclude>
     <ClInclude Include="Barrier.hpp">
       <Filter>Source Files\Game\Battle\Object\Player\Barrier</Filter>
+    </ClInclude>
+    <ClInclude Include="Moji_Effect.hpp">
+      <Filter>Source Files\Game\Battle\Object\Effect\Moji_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="My_Effect.hpp">
+      <Filter>Source Files\Game\Battle\Object\Effect\My_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Develop_Kind_Select_Rect.hpp">
+      <Filter>Source Files\Game\Develop\Develop_Kind_Select_Rect</Filter>
+    </ClInclude>
+    <ClInclude Include="Gauge_Effect.hpp">
+      <Filter>Source Files\Game\Battle\Object\Effect\Gauge_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Gauge_Effect_Data.hpp">
+      <Filter>Source Files\Game\Battle\Object\Player\Gauge_Effect_Data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -14,6 +14,9 @@ void Game::make_stage(int _stage) {
 	back_object.clear();
 	back_object_data.clear();
 
+	my_effect.clear();
+	moji_effect.clear();
+
 	//ステージデータをロード
 	load_stage_data(_stage);
 

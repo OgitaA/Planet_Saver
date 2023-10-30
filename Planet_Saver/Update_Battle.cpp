@@ -53,8 +53,26 @@ void Game::update_battle() {
 	//エネミー弾・画面外削除
 	delete_enemy_bullet();
 
+	//エフェクト更新
+	update_my_effect(d_time);
 
+	//文字エフェクト生成
+	make_moji_effect();
 
+	//文字エフェクト更新
+	update_moji_effect(d_time);
+
+	//文字エフェクト削除
+	delete_moji_effect();
+
+	//ゲージエフェクト生成
+	make_gauge_effect();
+
+	//ゲージエフェクト更新
+	update_gauge_effect(d_time);
+
+	//ゲージエフェクト削除
+	delete_gauge_effect();
 
 	//敵削除
 	delete_enemy();
@@ -197,8 +215,18 @@ void Game::player_bullet_vs_enemy() {
 
 	for (auto& e : enemy) {
 
+		bool hit = false;
+
+		String shape = e.get_shape();
+
+		if (shape == U"Quad") {
+			if (b_c.intersects(e.get_quad())) {
+				hit = true;
+			}
+		}
+
 		//当たった時
-		if (b_c.intersects(e.get_rect())) {
+		if (hit==true) {
 
 			e.damage(b_p);
 
@@ -282,16 +310,33 @@ void Game::delete_item() {
 
 void Game::player_vs_enemy() {
 
+	bool hit = false;
+
 	for (auto& e : enemy) {
 
 		RectF p_r = player.get_rect();
 		RectF e_r = e.get_rect();
 
+		
 
-		if (p_r.intersects(e_r)) {
-			player.damage();
+		String shape = e.get_shape();
+
+		if (shape == U"Quad") {
+
+			if (p_r.intersects(e.get_quad())) {
+				hit = true;
+			}
 		}
+
+
+		
 	}
+
+	if (hit == true) {
+		player.damage();
+	}
+
+
 }
 
 void Game::miss() {
@@ -388,6 +433,55 @@ void Game::player_catcher_vs_item() {
 
 }
 
+
+void Game::update_my_effect(double _d_time) {
+
+	for (auto& e : my_effect) {
+		e.update(_d_time);
+	}
+}
+
+void Game::make_moji_effect() {
+
+	//Player文字関連
+	if (player.get_moji_effect() != U"") {
+
+		String text = player.get_moji_effect();
+
+		int x = player.get_rect().x + 120 / 2;
+		int y = player.get_rect().y - 25;
+
+		String color = player.get_moji_effect_color();
+
+		moji_effect.push_back(Moji_Effect(text,x,y,color));
+
+
+		player.clear_moji_effect();
+		player.clear_moji_effect_color();
+	}
+}
+
+void Game::delete_moji_effect() {
+
+	moji_effect.remove_if([&](Moji_Effect e) {
+
+		if (e.get_delete() == true) {
+			return true;
+		}
+	
+		return false;
+		
+
+	});
+}
+
+void Game::update_moji_effect(double _d_time) {
+
+	for (auto& e : moji_effect) {
+		e.update(_d_time);
+	}
+}
+
 void Game::update_back(double _d_time) {
 
 	back.update(_d_time);
@@ -421,5 +515,30 @@ void Game::plus_score(int v) {
 
 	if (score > 99999999) {
 		score = 99999999;
+	}
+}
+
+void Game::make_gauge_effect() {
+
+}
+
+void Game::delete_gauge_effect() {
+
+	gauge_effect.remove_if([&](Gauge_Effect e) {
+
+		if (e.get_delete() == true) {
+			return true;
+		}
+
+	return false;
+
+
+    });
+}
+
+void Game::update_gauge_effect(double _d_time) {
+
+	for (auto& e : gauge_effect) {
+		e.update(_d_time);
 	}
 }

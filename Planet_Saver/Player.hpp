@@ -2,6 +2,7 @@
 #include"Catcher.hpp"
 #include"Option.hpp"
 #include"Barrier.hpp"
+#include"Gauge_Effect_Data.hpp"
 
 class Player {
 
@@ -93,7 +94,28 @@ public:
 		return pos;
 	}
 
+
 	size_t get_option_size() { return option.size(); }
+
+	//文字エフェクト
+
+	String get_moji_effect() {
+
+		return moji_effect;
+	}
+
+	String get_moji_effect_color() {
+
+		return moji_effect_color;
+	}
+
+	void clear_moji_effect(){moji_effect = U"";}
+
+	void clear_moji_effect_color() { moji_effect_color = U""; }
+
+	//ゲージエフェクト
+	void set_gauge_effect_data(String,int);
+
 
 private:
 
@@ -135,4 +157,9 @@ private:
 
 	double option_adjust_x = 118 / 2 - 28;
 	double option_adjust_y = 70 / 2 - 56 / 2;
+
+	String moji_effect = U"";
+	String moji_effect_color = U"";
+
+	Array<Gauge_Effect_Data> gauge_effect_data;
 };

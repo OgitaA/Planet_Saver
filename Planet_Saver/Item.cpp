@@ -25,6 +25,63 @@ void Item::set_data() {
 		shape = U"Quad";
 		quad = Quad({38,4},{10,76},{58,94},{85,22});
 	}
+	else if (U"news_paper" == name) {
+
+		type = U"recycle";
+		shape = U"Rect";
+	}
+	else if (U"battery" == name) {
+
+		type = U"non_burn";
+		shape = U"Rect";
+	}
+	else if (U"banana"==name) {
+
+		type = U"burn";
+		shape = U"Rect";
+	}
+	else if (U"branch" == name) {
+
+		type = U"burn";
+		shape = U"Rect";
+	}
+	else if (U"boots" == name) {
+
+		type = U"burn";
+		shape = U"Rect";
+	}
+	else if (U"bottle" == name) {
+
+		type = U"recycle";
+		shape = U"Rect";
+	}
+	else if (U"umbrella" == name) {
+
+		type = U"non_burn";
+		shape = U"Rect";
+	}
+	else if (U"glass" == name) {
+
+		type = U"non_burn";
+		shape = U"Rect";
+	}
+	else if (U"light_bulb" == name) {
+
+		type = U"non_burn";
+		shape = U"Rect";
+	}
+	else if (U"flower_pot" == name) {
+
+		type = U"non_burn";
+		shape = U"Rect";
+	}
+	else if (U"bag" == name) {
+
+		type = U"non_burn";
+		shape = U"Rect";
+	}
+
+
 }
 
 void Item::update(double _d_time) {

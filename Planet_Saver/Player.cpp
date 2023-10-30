@@ -82,7 +82,12 @@ void Player::update(double _d_time) {
 void Player::draw() {
 
 
-	barrier.draw();
+	//barrier.draw();
+
+	for (auto& o : option) {
+
+		o.draw();
+	}
 
 	catcher.draw();
 
@@ -90,10 +95,7 @@ void Player::draw() {
 
 	TextureAsset(image_name).draw(rect.x, rect.y);
 
-	for (auto& o : option) {
-
-		o.draw();
-	}
+	
 }
 
 
@@ -286,29 +288,56 @@ void Player::convert_catcher_item() {
 
 void Player::plus_burn_gauge() {
 
-	burn_gauge ++;
+	if (burn_gauge < 5) {
+		moji_effect = U"POWER UP";
+		moji_effect_color = U"Red";
 
-	if (burn_gauge > 5) {
+		burn_gauge++;
+	}
+
+
+	
+
+	if (burn_gauge >= 5) {
 		burn_gauge = 5;
 	}
 }
 
 void Player::plus_non_burn_gauge() {
 
-	non_burn_gauge ++;
+	if (non_burn_gauge < 5) {
+		moji_effect = U"SPEED UP";
+		moji_effect_color = U"Blue";
 
-	if (non_burn_gauge > 5) {
+		non_burn_gauge++;
+	}
+
+	
+
+	if (non_burn_gauge >= 5) {
 		non_burn_gauge = 5;
 	}
 }
 
 void Player::plus_recycle_gauge() {
 
-	recycle_gauge ++;
+	if (recycle_gauge < 5) {
+		moji_effect = U"BARRIER UP";
+		moji_effect_color = U"Green";
 
-	if (recycle_gauge > 5) {
+		recycle_gauge++;
+	}
+
+	
+
+	if (recycle_gauge >= 5) {
 		recycle_gauge = 5;
 	}
+}
+
+void Player::set_gauge_effect_data(String _name, int _v) {
+
+	gauge_effect_data.push_back(Gauge_Effect_Data(_name, _v));
 }
 
 

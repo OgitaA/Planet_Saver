@@ -122,6 +122,9 @@ void Game::load_image() {
 	TextureAsset::Register(U"enemy", U"image/battle/object/enemy/normal.png");
 	TextureAsset::Load(U"enemy");
 
+	TextureAsset::Register(U"enemy_normal", U"image/battle/object/enemy/normal.png");
+	TextureAsset::Load(U"enemy_normal");
+
 	//enemy_bullet
 	TextureAsset::Register(U"enemy_bullet", U"image/battle/object/enemy/normal.png");
 	TextureAsset::Load(U"enemy_bullet");
@@ -141,6 +144,36 @@ void Game::load_image() {
 
 	TextureAsset::Register(U"item_can", U"image/battle/object/item/can.png");
 	TextureAsset::Load(U"item_can");
+
+	TextureAsset::Register(U"item_news_paper", U"image/battle/object/item/news_paper.png");
+	TextureAsset::Load(U"item_news_paper");
+
+	TextureAsset::Register(U"item_battery", U"image/battle/object/item/battery.png");
+	TextureAsset::Load(U"item_battery");
+
+	TextureAsset::Register(U"item_banana", U"image/battle/object/item/banana.png");
+	TextureAsset::Load(U"item_banana");
+
+	TextureAsset::Register(U"item_branch", U"image/battle/object/item/branch.png");
+	TextureAsset::Load(U"item_branch");
+
+	TextureAsset::Register(U"item_boots", U"image/battle/object/item/boots.png");
+	TextureAsset::Load(U"item_boots");
+
+	TextureAsset::Register(U"item_umbrella", U"image/battle/object/item/umbrella.png");
+	TextureAsset::Load(U"item_umbrella");
+
+	TextureAsset::Register(U"item_glass", U"image/battle/object/item/glass.png");
+	TextureAsset::Load(U"item_glass");
+
+	TextureAsset::Register(U"item_light_bulb", U"image/battle/object/item/light_bulb.png");
+	TextureAsset::Load(U"item_light_bulb");
+
+	TextureAsset::Register(U"item_flower_pot", U"image/battle/object/item/flower_pot.png");
+	TextureAsset::Load(U"item_flower_pot");
+
+	TextureAsset::Register(U"item_bag", U"image/battle/object/item/bag.png");
+	TextureAsset::Load(U"item_bag");
 
 	//Battle_UI
 	TextureAsset::Register(U"frame", U"image/battle/UI/status/frame.png");
@@ -243,8 +276,7 @@ void Game::load_font() {
 
 	FontAsset::Register(U"UDP_G_B_70", 70, U"font/BIZUDPGothic-Bold.ttf");
 
-
-
+	FontAsset::Register(U"KIKA_R_20", 20, U"font/Kikakana-21-Bold.otf");
 	FontAsset::Register(U"KIKA_R_30", 30, U"font/Kikakana-21-Bold.otf");
 
 
@@ -259,31 +291,68 @@ void Game::debug_data() {
 
 void Game::set_up_develop() {
 
-	const int edge_x = 1200;
-	const int edge_y = 200;
-	const int size_w = 600;
-	const int size_h = 100;
+	{
 
-	const int space_h = 150;
+		const int edge_x = 1200;
+		const int edge_y = 200;
+		const int size_w = 600;
+		const int size_h = 100;
 
-	String name;
-	
-	for (int i = 0; i < 3; i++) {
+		const int space_h = 150;
 
-		int x = edge_x;
-		int y = edge_y + space_h * i;
+		String name;
 
-		if (i == 0) {
-			name = U"Rect";
+		for (int i = 0; i < 3; i++) {
+
+			int x = edge_x;
+			int y = edge_y + space_h * i;
+
+			if (i == 0) {
+				name = U"Rect";
+			}
+			else if (i == 1) {
+				name = U"Circle";
+			}
+			else if (i == 2) {
+				name = U"Quad";
+			}
+
+			develop_select_rect.push_back(Develop_Select_Rect(x, y, size_w, size_h, name));
+
 		}
-		else if (i == 1) {
-			name = U"Circle";
-		}
-		else if (i == 2) {
-			name = U"Quad";
-		}
 
-		develop_select_rect.push_back(Develop_Select_Rect(x, y, size_w, size_h, name));
+	}
+
+
+	{
+
+		const int edge_x = 50;
+		const int edge_y = 200;
+		const int size_w = 100;
+		const int size_h = 100;
+
+		const int space_h = 150;
+
+		String name;
+
+		for (int i = 0; i < 3; i++) {
+
+			int x = edge_x;
+			int y = edge_y + space_h * i;
+
+			if (i == 0) {
+				name = U"item";
+			}
+			else if (i == 1) {
+				name = U"enemy";
+			}
+			else if (i == 2) {
+				name = U"bullet";
+			}
+
+			develop_kind_select_rect.push_back(Develop_Kind_Select_Rect(x, y, size_w, size_h, name));
+
+		}
 
 	}
 }

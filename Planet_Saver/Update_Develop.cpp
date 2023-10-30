@@ -21,6 +21,21 @@ void Game::update_develop() {
 		}
 	}
 
+	for (auto& r : develop_kind_select_rect) {
+
+		Rect rect = r.rect;
+		String name = r.name;
+
+		//クリックされた
+		if (rect.leftClicked()) {
+			develop_kind = name;
+
+			clicked = true;
+		}
+	}
+
+
+
 	// キーボードからテキストを入力
 	TextInput::UpdateText(develop_image_name);
 

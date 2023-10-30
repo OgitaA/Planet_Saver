@@ -4,12 +4,12 @@ void Game::draw_develop() {
 
 	FontAsset(U"UDP_G_B_40")(develop_image_name + U'|' + develop_editing_text).draw(100, 50);
 
-	FontAsset(U"UDP_G_B_40")(U"item_" + develop_image_name).draw(100, 100, Palette::White);
+	FontAsset(U"UDP_G_B_40")(develop_kind+U"_" + develop_image_name).draw(100, 100, Palette::White);
 
 	Rect back_rect(300, 300, 100, 100);
 	back_rect.draw(Palette::White);
 
-	TextureAsset(U"item_" + develop_image_name).draw(300, 300);
+	TextureAsset(develop_kind + U"_" + develop_image_name).draw(300, 300);
 
 
 
@@ -73,7 +73,31 @@ void Game::draw_develop() {
 	}
 
 
+	for (auto& r : develop_kind_select_rect) {
 
+		Rect rect = r.rect;
+		String name = r.name;
+
+		rect.draw(Palette::White);
+
+		if (name == develop_kind) {
+			rect.draw(Palette::Yellow);
+		}
+
+		String icon = U"";
+
+		if (name == U"item") {
+			icon = U"I";
+		}
+		else if (name == U"enemy") {
+			icon = U"E";
+		}
+		else if (name == U"") {
+
+		}
+
+		FontAsset(U"UDP_G_B_40")(icon).draw(rect.x, rect.y, Palette::Black);
+	}
 
 
 

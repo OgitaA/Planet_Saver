@@ -28,6 +28,8 @@ void Enemy::each() {
 
 	if (pattern == U"normal") {
 		speed = 200;
+		shape = U"Quad";
+		quad = Quad({ 10,10 }, { 10,70 }, { 113,73 }, { 113,6 });
 	}
 }
 
@@ -43,7 +45,9 @@ void Enemy::update(double _d_time) {
 
 void Enemy::draw() {
 
-	TextureAsset(U"enemy").draw(rect.x, rect.y);
+	String image_name = U"enemy_" + name;
+
+	TextureAsset(image_name).draw(rect.x, rect.y);
 }
 
 void Enemy::move() {
@@ -58,4 +62,13 @@ void Enemy::move() {
 void Enemy::straight_move() {
 
 	rect.x -= speed * d_time;
+}
+
+
+Quad Enemy::get_quad() {
+
+	Quad quad_v({ rect.x + quad.p0.x, rect.y + quad.p0.y }, { rect.x + quad.p1.x, rect.y + quad.p1.y }, { rect.x + quad.p2.x, rect.y + quad.p2.y }, { rect.x + quad.p3.x, rect.y + quad.p3.y });
+
+	return quad_v;
+
 }
