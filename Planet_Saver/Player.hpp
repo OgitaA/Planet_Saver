@@ -14,6 +14,8 @@ public:
 	void draw();
 
 	RectF get_rect() { return rect; }
+	RectF get_hit_rect() { return hit_rect; }
+	void update_hit_rect();
 	double get_shot_cool_time() { return shot_cool_time; }
 	void set_shot_cool_time(double v) { shot_cool_time = v; }
 	void damage();
@@ -23,22 +25,32 @@ public:
 	void limit_screen();
 	void change_mode();
 
+	//無敵かどうか
+	bool get_muteki() {
+
+		if (muteki_count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	//リセット
 	void reset();
+	void reset_common();
 
 	int get_burn_gauge() { return burn_gauge; }
 	int get_non_burn_gauge() { return non_burn_gauge; }
 	int get_recycle_gauge() { return recycle_gauge; }
 
-	bool get_miss() { return miss; }
 
-	
+    //キャッチャー
 
 	Catcher catcher;
 
 	RectF get_catcher_hit_rect() { return catcher.get_hit_rect(); }
 
 	void plus_catcher_item(String _v, String _type) { catcher.plus_item(_v, _type); }
-	bool check_catcher_full() {return catcher.check_full_item(); }
+	bool check_catcher_full() { return catcher.check_full_item(); }
 
 	//キャッチャーのアイテムをエネルギーに変換
 	void convert_catcher_item();
@@ -50,10 +62,10 @@ public:
 	void clear_catcher_item() { catcher.clear_item(); }
 
 
-	//キャッチャー
+	
 	bool check_catcher_use() {
 
-		if (catcher.get_operation()==true) {
+		if (catcher.get_operation() == true) {
 
 			if (catcher.get_move_y() > 25) {
 
@@ -80,13 +92,13 @@ public:
 	void control_option();
 	void adjust_option();
 
-	Barrier barrier;
+	void set_option_memory();
 
 	Array<Vec2> get_option_pos() {
 
 		Array<Vec2> pos;
 
-		for (auto& o:option) {
+		for (auto& o : option) {
 
 			pos.push_back(Vec2(o.get_x() + 28, o.get_y() + 28));
 		}
@@ -94,27 +106,46 @@ public:
 		return pos;
 	}
 
-
 	size_t get_option_size() { return option.size(); }
+
+
+	//バリア
+	bool get_barrier_exist() { return barrier_exist; }
+	Array<Triangle> get_barrier_triangle() { return barrier.get_triangle(); }
+    Triangle get_barrier_triangle_one(int _index) { return barrier.get_triangle(_index); }
+
+	void damage_barrier() { barrier.damage(); }
+	void control_barrier();
+	void plus_barrier();
+
+	
+
 
 	//文字エフェクト
 
-	String get_moji_effect() {
+	String get_moji_effect() {	return moji_effect;}
+	String get_moji_effect_color() {return moji_effect_color;}
 
-		return moji_effect;
-	}
-
-	String get_moji_effect_color() {
-
-		return moji_effect_color;
-	}
-
-	void clear_moji_effect(){moji_effect = U"";}
-
+	void clear_moji_effect() { moji_effect = U""; }
 	void clear_moji_effect_color() { moji_effect_color = U""; }
 
+
 	//ゲージエフェクト
-	void set_gauge_effect_data(String,int);
+	void set_gauge_effect_data(String, int);
+
+	size_t get_gauge_effect_data_size() { return gauge_effect_data.size(); }
+	String get_gauge_effect_data_type(int index) {return  gauge_effect_data[index].type; }
+	int get_gauge_effect_data_pos(int index) { return gauge_effect_data[index].pos; }
+
+	void delete_gauge_effect_data() { gauge_effect_data.clear(); }
+
+	//ミス
+	void set_miss();
+	void set_miss_gameover();
+	bool get_miss() { return miss; }
+	void update_miss();
+	
+
 
 
 private:
@@ -123,11 +154,11 @@ private:
 
 	RectF rect;
 
+	RectF hit_rect;
+
 	double speed = 450;
 
 	double shot_cool_time = 0;
-
-	bool miss = false;
 
 	double muteki_count = 0;
 
@@ -136,10 +167,6 @@ private:
 	int burn_gauge = 0;
 	int non_burn_gauge = 0;
 	int recycle_gauge = 0;
-
-	double burn_decrease_count = 0;
-	double non_burn_decrease_count = 0;
-	double recycle_decrease_count = 0;
 
 	double catch_error_count = 0;
 
@@ -162,4 +189,21 @@ private:
 	String moji_effect_color = U"";
 
 	Array<Gauge_Effect_Data> gauge_effect_data;
+
+
+	//バリア
+
+	int barrier_count = 0;
+
+	bool barrier_exist = false;
+
+	Barrier barrier;
+
+
+	//ミス
+
+	bool miss = false;
+	double miss_count = 0;
+	int miss_scene = 0;
+
 };

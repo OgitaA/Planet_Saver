@@ -7,6 +7,7 @@ void Game::set_up() {
 	load_image();
 	load_music();
 	load_font();
+	set_shader();
 
 	set_up_develop();
 	debug_data();
@@ -53,6 +54,12 @@ void Game::load_image() {
 	TextureAsset::Register(U"back_1", U"image/battle/back/1.png");
 	TextureAsset::Load(U"back_1");
 
+	TextureAsset::Register(U"back_2", U"image/battle/back/2.png");
+	TextureAsset::Load(U"back_2");
+
+	TextureAsset::Register(U"back_3", U"image/battle/back/3.png");
+	TextureAsset::Load(U"back_3");
+
 	//BackObject
 	TextureAsset::Register(U"back_object_crowd", U"image/battle/back/back_object/crowd.png");
 	TextureAsset::Load(U"back_object_crowd");
@@ -81,6 +88,9 @@ void Game::load_image() {
 	TextureAsset::Register(U"back_object_tree_small", U"image/battle/back/back_object/tree_small.png");
 	TextureAsset::Load(U"back_object_tree_small");
 
+	TextureAsset::Register(U"back_object_bubble", U"image/battle/back/back_object/bubble.png");
+	TextureAsset::Load(U"back_object_bubble");
+
 	//player
 	TextureAsset::Register(U"player", U"image/battle/object/player/player.png");
 	TextureAsset::Load(U"player");
@@ -94,6 +104,9 @@ void Game::load_image() {
 
 	TextureAsset::Register(U"player_recycle", U"image/battle/object/player/player_recycle.png");
 	TextureAsset::Load(U"player_recycle");
+
+	TextureAsset::Register(U"player_error", U"image/battle/object/player/player_error.png");
+	TextureAsset::Load(U"player_error");
 
 	TextureAsset::Register(U"net", U"image/battle/object/player/net.png");
 	TextureAsset::Load(U"net");
@@ -125,9 +138,12 @@ void Game::load_image() {
 	TextureAsset::Register(U"enemy_normal", U"image/battle/object/enemy/normal.png");
 	TextureAsset::Load(U"enemy_normal");
 
+	TextureAsset::Register(U"enemy_elite", U"image/battle/object/enemy/elite.png");
+	TextureAsset::Load(U"enemy_elite");
+
 	//enemy_bullet
-	TextureAsset::Register(U"enemy_bullet", U"image/battle/object/enemy/normal.png");
-	TextureAsset::Load(U"enemy_bullet");
+	TextureAsset::Register(U"enemy_bullet_normal", U"image/battle/object/enemy_bullet/normal.png");
+	TextureAsset::Load(U"enemy_bullet_normal");
 
 	//Item
 	TextureAsset::Register(U"burn_item", U"image/battle/object/item/burn.png");
@@ -175,6 +191,22 @@ void Game::load_image() {
 	TextureAsset::Register(U"item_bag", U"image/battle/object/item/bag.png");
 	TextureAsset::Load(U"item_bag");
 
+
+	//Effect
+
+	TextureAsset::Register(U"effect_explode", U"image/battle/object/effect/explode.png");
+	TextureAsset::Load(U"effect_explode");
+
+	for (int i = 0; i < 5; i++) {
+
+		String image_name = U"effect_explode_" + Format(i);
+		String adress = U"image/battle/object/effect/explode_" + Format(i) + U".png";
+
+		TextureAsset::Register(image_name, adress);
+		TextureAsset::Load(image_name);
+
+	}
+
 	//Battle_UI
 	TextureAsset::Register(U"frame", U"image/battle/UI/status/frame.png");
 	TextureAsset::Load(U"frame");
@@ -204,14 +236,18 @@ void Game::load_image() {
 	TextureAsset::Register(U"green_gauge", U"image/battle/UI/status/green_gauge.png");
 	TextureAsset::Load(U"green_gauge");
 
+	TextureAsset::Register(U"gauge_effect", U"image/battle/UI/status/gauge_effect.png");
+	TextureAsset::Load(U"gauge_effect");
+
+
+
+
 	//Stage_Select
 	TextureAsset::Register(U"stage_select_back", U"image/stage_select/back.png");
 	TextureAsset::Load(U"stage_select_back");
 
 	TextureAsset::Register(U"stage_select_box", U"image/stage_select/box.png");
 	TextureAsset::Load(U"stage_select_box");
-
-
 
 	for (int i = 0; i < 3; i++) {
 
@@ -252,9 +288,13 @@ void Game::load_music() {
 		se << str;
 	}
 
-	//BGM
-	AudioAsset::Register(bgm[0], Audio::Stream, U"music/bgm/タイトル.mp3", Loop::Yes);
+	
 
+	//BGM
+	AudioAsset::Register(bgm[0], Audio::Stream, U"music/bgm/Digital_Space.mp3", Loop::Yes);
+	//AudioAsset::Load(bgm[0]);
+	AudioAsset::Register(bgm[1], Audio::Stream, U"music/bgm/Tokyo_Dungeon.mp3", Loop::Yes);
+	//AudioAsset::Load(bgm[1]);
 
 	//SE
 	AudioAsset::Register(se[0], U"music/se/プレイヤーショット.mp3");
@@ -279,11 +319,18 @@ void Game::load_font() {
 	FontAsset::Register(U"KIKA_R_20", 20, U"font/Kikakana-21-Bold.otf");
 	FontAsset::Register(U"KIKA_R_30", 30, U"font/Kikakana-21-Bold.otf");
 
+	FontAsset::Register(U"KIKA_R_120", 120, U"font/Kikakana-21-Bold.otf");
 
+	FontAsset::Register(U"UD_M_B_50", 50, U"font/BIZUDPGothic-Bold.ttf");
+
+	FontAsset::Register(U"UD_M_B_40", 40, U"font/BIZUDPGothic-Bold.ttf");
 }
 
 void Game::debug_data() {
-	main_scene = 999;
+
+	//main_scene = U"title";
+
+	main_scene = U"gameover";
 
 	stage = 1;
 	
@@ -354,5 +401,14 @@ void Game::set_up_develop() {
 
 		}
 
+	}
+}
+
+void Game::set_shader() {
+
+	psWhite = HLSL{ U"shader/white.hlsl", U"PS" };
+	if (not psWhite)
+	{
+		throw Error{ U"Failed to load a shader file" };
 	}
 }

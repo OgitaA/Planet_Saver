@@ -114,7 +114,7 @@ void Game::update_develop() {
 	}
 
 	if (screen.rightClicked()) {
-		main_scene = 1;
+		main_scene = U"stage_select";
 	}
 
 }

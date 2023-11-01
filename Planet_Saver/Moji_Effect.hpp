@@ -31,6 +31,6 @@ private:
 
 	double count = 0;
 
-	double delete_count = 2;
+	double delete_count = 1.5;
 
 };

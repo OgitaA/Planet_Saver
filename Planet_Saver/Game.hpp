@@ -17,6 +17,9 @@
 #include"Gauge_Effect_Data.hpp"
 
 
+#include"White_Effect.hpp"
+
+
 #include"Develop_Select_Rect.hpp"
 #include"Develop_Kind_Select_Rect.hpp"
 
@@ -24,7 +27,8 @@ class Game {
 
 public:
 
-	int main_scene = 0;
+	String main_scene = U"";
+
 
 	void set_up();
 
@@ -39,6 +43,7 @@ public:
 	void load_image();
 	void load_music();
 	void load_font();
+	void set_shader();
 	void debug_data();
 
 	//Common
@@ -53,12 +58,13 @@ public:
 	double change_scene_alpha = 0;
 	double change_scene_count = 0;
 
-	int change_scene_go_scene = 0;
+	String change_scene_go_scene = U"";
 
-	void change_scene(int);
+	void change_scene(String);
 	void change_scene_title();
 	void change_scene_battle();
 	void change_scene_stage_select();
+	void change_scene_gameover();
 
 	void update_change_scene();
 	void draw_change_scene();;
@@ -78,6 +84,8 @@ public:
 
 	void plus_score(int);
 
+	void go_gameover();
+
 	Player player;
 	Array<Player_Bullet> player_bullet;
 	Array<Emerge_Enemy> emerge_enemy;
@@ -91,6 +99,7 @@ public:
 	Array<My_Effect> my_effect;
 	Array<Moji_Effect> moji_effect;
 	Array<Gauge_Effect> gauge_effect;
+
 
 	//Player
 	void make_player_shot();
@@ -110,7 +119,8 @@ public:
 	void delete_enemy();
 
 	void make_enemy_shot();
-	void make_enemy_bullet(String, double, double, double, int, double,double);
+	void make_enemy_bullet(String, double, double,int, double,double);
+	double get_angle_e_to_p(RectF);
 
 	void delete_enemy_bullet();
 
@@ -119,6 +129,14 @@ public:
 
 	void player_bullet_vs_enemy();
 	void player_vs_enemy();
+	void player_vs_enemy_bullet();
+	void player_barrier_enemy_bullet();
+
+	//shader
+
+	PixelShader psWhite;
+
+	ConstantBuffer<WhiteEffectConstants> cbWhite;
 
 	//Item
 	void make_item();
@@ -139,6 +157,10 @@ public:
 	//My_Effect
 	void update_my_effect(double);
 	void draw_my_effect();
+	void delete_my_effect();
+
+	//Explode
+	
 
 	//Moji_Effect
 	void make_moji_effect();
@@ -150,7 +172,7 @@ public:
 	void make_gauge_effect();
 	void delete_gauge_effect();
 	void update_gauge_effect(double);
-	void draw_gauge_effect();
+	
 
 
 	//UI
@@ -158,16 +180,21 @@ public:
 
 	//Stage
 
-	double stage_scroll_speed = 100;
-	double stage_scroll_speed_2 = 100;
+	double stage_scroll_speed_layer_0 = 100;
+	double stage_scroll_speed_layer_1 = 100;
+
+	double stage_up_scroll_speed = 50;
 
 	double back_count;
 	void make_stage(int);
-	void make_back_object_data(String, int, double);
-	void make_back_object_data(String, int, double, String);
-	void make_back_object_data(String, int, double, int);
-	void make_back_object(String, int);
-	void make_back_object(String, int, String);
+	
+
+	void make_back_object_data(String,String,int,int,int,double);
+	void make_back_object_data(String, String, int, int, int, double, int);
+
+	
+
+	void make_back_object(String, String, int, int, int);
 
 	void update_stage(double);
 
@@ -181,9 +208,10 @@ public:
 	int title_scene = 0;
 	int title_cur = 0;
 	double title_cur_interval = 0;
+	bool title_once = false;
 
 	void update_title();
-	void draw_title();
+	void draw_title(); 
 
 	//Stage_Select
 
@@ -198,7 +226,9 @@ public:
 	void update_gameover();
 	void draw_gameover();
 
+	bool gameover_once = false;
 
+	bool gameover_flag = false;
 
 	//Menu
 	void update_menu();
@@ -227,6 +257,10 @@ public:
 	void change_bgm_volume();
 	void change_se_volume();
 
+	void start_bgm(String);
+
+	//Gameover
+	int gameover_cur = 0;
 
 
 	//Develop

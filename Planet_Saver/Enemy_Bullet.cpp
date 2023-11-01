@@ -1,16 +1,26 @@
 ﻿#include"Enemy_Bullet.hpp"
 
-Enemy_Bullet::Enemy_Bullet(String _name, double _x, double _y, double _r, int _power, double _speed,double _angle) {
+Enemy_Bullet::Enemy_Bullet(String _name, double _x, double _y,int _power, double _speed,double _angle) {
 
 	name = _name;
 
-	circle = Circle(_x, _y, _r);
+	circle.x = _x;
+	circle.y = _y;
 
 	speed = _speed;
 
 	power = _power;
 
 	angle = _angle;
+
+	set_up();
+}
+
+void Enemy_Bullet::set_up() {
+
+	if (name = U"normal") {
+		circle.r = 46 / 2;
+	}
 
 }
 
@@ -23,7 +33,11 @@ void Enemy_Bullet::update(double _d_time) {
 
 void Enemy_Bullet::draw() {
 
-	TextureAsset(U"bullet").draw(circle.x - circle.r, circle.y - circle.r);
+	String image = U"enemy_bullet_" + name;
+
+	TextureAsset(image).draw(circle.x - circle.r, circle.y - circle.r);
+
+	//circle.drawFrame(5, Palette::Red);
 }
 
 void Enemy_Bullet::move() {

@@ -7,33 +7,21 @@ void Game::update() {
 
 	if (change_scene_process == false) {
 
-		switch (main_scene)
-		{
-		case 0:
-			update_battle();
-			break;
-		case 1:
-			update_stage_select();
-			break;
-		case 2:
-			//update_menu();
-			break;
-		case 100:
+		if (main_scene == U"title") {
 			update_title();
-			break;
-		case 101:
-			//update_setting();
-			break;
-		case 102:
-			//update_ending();
-			break;
-		case 999:
-			update_develop();
-			break;
-		default:
-			break;
 		}
-
+		else if (main_scene == U"stage_select") {
+			update_stage_select();
+		}
+		else if (main_scene == U"battle") {
+			update_battle();
+		}
+		else if (main_scene == U"gameover") {
+			update_gameover();
+		}
+		else if (main_scene == U"develop") {
+			update_develop();
+		}
 	}
 	else if (change_scene_process == true) {
 

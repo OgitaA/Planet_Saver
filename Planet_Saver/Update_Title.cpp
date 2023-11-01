@@ -2,6 +2,13 @@
 
 void Game::update_title() {
 
+	if (title_once == false) {
+
+		play_bgm(0);
+
+		title_once = true;
+	}
+
 	/*
 
 	double d_time = Scene::DeltaTime();

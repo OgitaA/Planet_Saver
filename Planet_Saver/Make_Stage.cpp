@@ -2,20 +2,31 @@
 
 void Game::make_stage(int _stage) {
 
+	stage_time = 0;
 	score = 0;
+	remain = 3;
 
 	player.reset();
 	player_bullet.clear();
 	emerge_enemy.clear();
-	enemy.clear();
-	enemy_bullet.clear();
+    enemy.clear();
+    enemy_bullet.clear();
+	emerge_item.clear();
 	item.clear();
 
+    back_object_data.clear();
 	back_object.clear();
-	back_object_data.clear();
+	
 
 	my_effect.clear();
 	moji_effect.clear();
+	gauge_effect.clear();
+
+	se_will.clear();
+	se_lock.clear();
+
+	
+
 
 	//ステージデータをロード
 	load_stage_data(_stage);
@@ -154,50 +165,118 @@ void Game::load_stage_data(int _stage) {
 
 void Game::set_stage_1() {
 
-	stage_scroll_speed = 800;
-	stage_scroll_speed_2 = 600;
+	//スクロールスペード設定
+	stage_scroll_speed_layer_0 = 800;
+	stage_scroll_speed_layer_1 = 600;
 
-	make_back_object_data(U"bill_3", 1080 - 45 - 280, 0.14, U"1");
+	//流れる方向
+	String direction = U"left";
 
-	make_back_object_data(U"bill_2", 1080 - 45 - 280, 0.2, U"1");
+	//地面
+	int bottom = 45;
 
-	make_back_object_data(U"bill_3", 1080 - 45 - 280, 0.25, U"1");
+	//生成位置
+	int x = 1920;
 
-	make_back_object_data(U"bill_3", 1080 - 45 - 280, 2, U"1");
+	//ビル
+	{
+		String name = U"tree_big";
+		int y = 1080 - 280 - bottom;
+		int layer = 0;
 
-	make_back_object_data(U"bill_2", 1080 - 45 - 280, 1.3, U"1");
+		//手前
 
-	make_back_object_data(U"bill_4", 1080 - 45 - 280, 0.753);
+		make_back_object_data(U"bill_4", direction, x, y, layer, 0.753);
 
-	make_back_object_data(U"bill_5", 1080 - 45 - 280, 0.23);
+		make_back_object_data(U"bill_5", direction, x, y, layer, 0.23);
 
-	make_back_object_data(U"bill_6", 1080 - 45 - 280, 1.7);
+		make_back_object_data(U"bill_6", direction, x, y, layer, 1.7);
 
-	make_back_object_data(U"bill", 1080 - 45 - 280, 1);
+		make_back_object_data(U"bill", direction, x, y, layer, 1);
 
-	make_back_object_data(U"tree_big", 1080 - 45 - 120, 0.8);
 
-	make_back_object_data(U"tree_big", 1080 - 45 - 120, 0.78);
+		layer = 1;
 
-	make_back_object_data(U"tree_big", 1080 - 45 - 120, 2.8);
+		make_back_object_data(U"bill_3", direction, x, y, layer, 0.14);
 
-	make_back_object_data(U"tree_big", 1080 - 45 - 120, 3.5);
+		make_back_object_data(U"bill_2", direction, x, y, layer, 0.2);
 
-	make_back_object_data(U"tree_small", 1080 - 45 - 75, 0.55);
+		make_back_object_data(U"bill_3", direction, x, y, layer, 0.25);
 
-	make_back_object_data(U"tree_small", 1080 - 45 - 75, 7.5);
+		make_back_object_data(U"bill_3", direction, x, y, layer, 2);
 
-	make_back_object_data(U"tree_small", 1080 - 45 - 75, 0.4);
+		make_back_object_data(U"bill_2", direction, x, y, layer, 1.3);
 
-	make_back_object_data(U"tree_small", 1080 - 45 - 75, 0.9);
 
-	make_back_object_data(U"crowd", 300, 1.3, 200);
+	}
 
-	make_back_object_data(U"crowd", 300, 0.5, 200);
+	//木・大
+	{
 
+		String name = U"tree_big";
+		int y = 1080 - 120 - bottom;
+		int layer = 0;
+
+		make_back_object_data(name, direction, x, y, layer, 0.8);
+
+		make_back_object_data(name, direction, x, y, layer, 0.78);
+
+		make_back_object_data(name, direction, x, y, layer, 2.8);
+
+		make_back_object_data(name, direction, x, y, layer, 3.5);
+
+	}
+
+	//木・小
+
+	{
+		String name = U"tree_small";
+		int y = 1080 - 75 - bottom;
+		int layer = 0;
+
+		make_back_object_data(name, direction, x, y, layer, 0.55);
+
+		make_back_object_data(name, direction, x, y, layer, 7.5);
+
+		make_back_object_data(name, direction, x, y, layer, 0.4);
+
+		make_back_object_data(name, direction, x, y, layer, 0.9);
+
+	}
+
+	//雲
+
+	{
+		String name = U"crowd";
+		int y = 300;
+		int layer = 0;
+		double random_v = 200;
+
+		make_back_object_data(name, direction, x, y, layer, 1.3, random_v);
+
+		make_back_object_data(name, direction, x, y, layer, 0.5, random_v);
+
+		
+	}
 }
 
 void Game::set_stage_2() {
+
+	//スクロールスペード設定
+	stage_scroll_speed_layer_0 = 2;
+	stage_up_scroll_speed = 30;
+
+	int bubble_x;
+	String direction = U"up";
+	int x = 1920 / 2;
+	int y = 1080 + 100;
+	int layer = 0;
+
+	//泡
+
+	//make_back_object_data(U"bubble", direction, x, y, layer, 0.5);
+
+	//サカナ
 
 }
 
@@ -205,18 +284,16 @@ void Game::set_stage_3() {
 
 }
 
-void Game::make_back_object_data(String _name, int _y, double _count) {
 
-	back_object_data.push_back(Back_Object_Data(_name, _y, _count));
+
+//ニュー
+void Game::make_back_object_data(String _name,String _direction,int _x,int _y,int _layer,double _count) {
+
+	back_object_data.push_back(Back_Object_Data(_name, _direction, _x, _y, _layer, _count));
 }
 
-void Game::make_back_object_data(String _name, int _y, double _count, String _layer) {
+//ニューランダム
+void Game::make_back_object_data(String _name, String _direction, int _x, int _y,int _layer,double _count,int _random) {
 
-	back_object_data.push_back(Back_Object_Data(_name, _y, _count, _layer));
-}
-
-
-void Game::make_back_object_data(String _name, int _y, double _count, int _random_v) {
-
-	back_object_data.push_back(Back_Object_Data(_name, _y, _count, _random_v));
+	back_object_data.push_back(Back_Object_Data(_name, _direction, _x, _y, _layer,_count,_random));
 }

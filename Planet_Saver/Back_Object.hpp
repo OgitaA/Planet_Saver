@@ -8,12 +8,17 @@ public:
 
 	Back_Object(String, int);
 	Back_Object(String, int, String);
+	Back_Object(String, int, String,String);
+
+	Back_Object(String, String, int,int,int);
 
 	void update(double);
+	void update(double, double);
 	void draw();
 
 	RectF get_rect() { return rect; }
 	int get_layer() { return layer; }
+	String get_direction() { return direction; }
 
 private:
 
@@ -22,6 +27,8 @@ private:
 	RectF rect;
 
 	int layer = 0;
+
+	String direction = U"left";
 
 
 

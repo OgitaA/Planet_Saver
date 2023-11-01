@@ -2,19 +2,25 @@
 
 void Game::draw_battle() {
 
+	//Back
+
 	draw_back();
 
 	draw_back_object();
 
+	//Effect
+
+	draw_my_effect();
+
 	draw_moji_effect();
 
-	draw_item();
+	//Object
 
 	draw_player_bullet();
 
-	draw_enemy();
+	draw_item();
 
-	draw_my_effect();
+	draw_enemy();
 
 	draw_enemy_bullet();
 
@@ -35,7 +41,28 @@ void Game::draw_player_bullet() {
 void Game::draw_enemy() {
 
 	for (auto& e : enemy) {
-		e.draw();
+
+		if (e.get_white() == false) {
+
+			e.draw();
+		}
+		else {
+
+			const ScopedCustomShader2D shader{ psWhite };
+
+			cbWhite->strength = e.get_white_count();
+
+			Graphics2D::SetPSConstantBuffer(1, cbWhite);
+
+
+			e.draw();
+		}
+
+
+		
+
+
+
 	}
 }
 
@@ -86,6 +113,8 @@ void Game::draw_moji_effect() {
 		e.draw();
 	}
 }
+
+
 
 void Game::draw_UI() {
 
@@ -195,6 +224,12 @@ void Game::draw_UI() {
 		TextureAsset(U"green_gauge").draw(x, 52);
 	}
 
+
+	//Gauge_Effect
+
+	for (auto& e : gauge_effect) {
+		e.draw();
+	}
 
 
 

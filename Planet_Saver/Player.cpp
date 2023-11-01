@@ -6,40 +6,68 @@ Player::Player() {
 
 	reset();
 
-	for (int i = 0; i < 100; i++) {
-
-		memory_pos.push_back(Vec2{ rect.x + option_adjust_x,rect.y + option_adjust_y });
-	}
-
-	for (int i = 0; i < 5; i++) {
-		plus_option();
-	}
 }
 
 void Player::reset() {
 
-
 	mode = U"burn";
 	muteki_count = 0;
+
+	barrier_count = 0;
+
+	set_option_memory();
+
+	clear_moji_effect();
+	clear_moji_effect_color();
+
+	delete_gauge_effect_data();
+
+	//キャッチャーリセット
+	catcher.reset();
+	//キャッチャー位置調整
+	catcher.first(rect.x, rect.y);
+
+	//キャッチャーエラーリセット
+	catch_error_count = 0;
+
+	//キャッチャー使用可能
+	catcher.set_miss(false);
+
+	//オプション記憶
+	set_option_memory();
+
+	reset_common();
+}
+
+void Player::reset_common() {
+
 	shot_cool_time = 0;
 
 	burn_gauge = 0;
-	non_burn_gauge = 3;
-	recycle_gauge = 4;
+	non_burn_gauge = 0;
+	recycle_gauge = 0;
 
-	
-	
+	//オプション系
+	option.clear();
+
+	//バリア
+	barrier_exist = false;
+	barrier_count = 0;
+
 }
 
 void Player::update(double _d_time) {
 
 	d_time = _d_time;
 
+	
+	//無敵
 	if (muteki_count > 0) {
 
 		muteki_count -= d_time;
 	}
 
+	//ショットクールタイム
 	if (shot_cool_time > 0) {
 
 		shot_cool_time -= d_time;
@@ -48,7 +76,14 @@ void Player::update(double _d_time) {
 	control_power();
 	control_speed();
 
-	move();
+
+	//移動
+	if (miss == false) {
+		move();
+	}
+
+	//ヒットレクト
+	update_hit_rect();
 
 	//モードチェンジ
 	change_mode();
@@ -57,8 +92,6 @@ void Player::update(double _d_time) {
 	catcher.update(d_time, rect.x, rect.y, mode);
 	
 	convert_catcher_item();
-
-
 
 	if (catch_error_count > 0) {
 
@@ -69,21 +102,26 @@ void Player::update(double _d_time) {
 		catcher.set_error(false);
 	}
 
-	//Print << U"catcher_count::" << catch_error_count;
-
 	//オプション
 	control_option();
 
 	//バリア
-	barrier.update(rect.x, rect.y);
+	control_barrier();
 
+	//ミス
+	if (miss == true) {
+		update_miss();
+	}
 }
 
 void Player::draw() {
 
+	if (barrier_exist == true) {
 
-	//barrier.draw();
+		barrier.draw();
+	}
 
+	
 	for (auto& o : option) {
 
 		o.draw();
@@ -93,9 +131,16 @@ void Player::draw() {
 
 	String image_name = U"player_" + mode;
 
+	if (catch_error_count > 0) {
+
+		image_name = U"player_error";
+	}
+
 	TextureAsset(image_name).draw(rect.x, rect.y);
 
-	
+	if (muteki_count > 0) {
+		hit_rect.drawFrame(5, Palette::Red);
+	}
 }
 
 
@@ -117,11 +162,11 @@ void Player::move() {
 		now_speed *= 0.4;
 	}*/
 
-
+	/*
 	//エラー中・速度低下
 	if (catch_error_count > 0) {
 		now_speed *= 0.5;
-	}
+	}*/
 
 
 	//斜め移動の速度制御
@@ -190,6 +235,10 @@ void Player::limit_screen() {
 
 }
 
+void Player::update_hit_rect() {
+
+	hit_rect = RectF(rect.x + 15, rect.y + 15, 90, 40);
+}
 
 
 void Player::damage() {
@@ -238,8 +287,15 @@ void Player::convert_catcher_item() {
 		//キャッチャー上昇中
 		if (catcher.get_status() == U"up") {
 
-			//キャッチャーが自機と重なりかけた
+			//キャッチャーが自機と重なりかけたら処理
 			if (catcher.get_move_y() <= 25) {
+
+				//カウント
+				int item_count = 0;
+
+				//エラー
+				bool error = false;
+
 
 				for (size_t i = 0; i < catcher.get_item_size(); i++) {
 
@@ -248,36 +304,60 @@ void Player::convert_catcher_item() {
 					if (mode == U"burn") {
 
 						if (type == U"burn") {
-							plus_burn_gauge();
+							item_count++;
 						}
 						else {
-							catcher_error();
+							error = true;
 						}
 					}
 					else if (mode == U"non_burn") {
 
 						if (type == U"non_burn") {
-							plus_non_burn_gauge();
+							item_count++;
 						}
 						else {
-							catcher_error();
+							error = true;
 						}
 					}
 					else if (mode == U"recycle") {
 
 						if (type == U"recycle") {
-							plus_recycle_gauge();
+							item_count++;
 						}
 						else
 						{
-							catcher_error();
+							error = true;
 						}
 					}
 
 				
 				}
 
-				//キャッチャーのアイテムデータ
+
+				//エラー発生
+				if (error==true) {
+
+					catcher_error();
+				}
+				//エラーがないならゲット
+				else {
+
+					for (int i = 0; i < item_count; i++) {
+
+						if (mode==U"burn") {
+							plus_burn_gauge();
+						}
+						else if (mode == U"non_burn") {
+							plus_non_burn_gauge();
+						}
+						else if (mode == U"recycle") {
+							plus_recycle_gauge();
+						}
+					}
+
+				}
+
+				//キャッチャーのアイテムデータをクリア
 				clear_catcher_item();
 			}
 		
@@ -293,6 +373,10 @@ void Player::plus_burn_gauge() {
 		moji_effect_color = U"Red";
 
 		burn_gauge++;
+
+		plus_option();
+
+		set_gauge_effect_data(U"burn", burn_gauge);
 	}
 
 
@@ -310,6 +394,8 @@ void Player::plus_non_burn_gauge() {
 		moji_effect_color = U"Blue";
 
 		non_burn_gauge++;
+
+		set_gauge_effect_data(U"non_burn", non_burn_gauge);
 	}
 
 	
@@ -326,6 +412,10 @@ void Player::plus_recycle_gauge() {
 		moji_effect_color = U"Green";
 
 		recycle_gauge++;
+
+		plus_barrier();
+
+		set_gauge_effect_data(U"recycle", recycle_gauge);
 	}
 
 	
@@ -374,11 +464,39 @@ void Player::control_speed() {
 
 }
 
+void Player::set_option_memory() {
 
+	memory_pos.clear();
+
+	for (int i = 0; i < 100; i++) {
+
+		memory_pos.push_back(Vec2{ rect.x + option_adjust_x,rect.y + option_adjust_y });
+	}
+
+}
 
 
 void Player::plus_option() {
-	option.push_back(Option(rect.x + option_adjust_x, rect.y +option_adjust_y));
+
+	if (option.size() < 5) {
+
+		option.push_back(Option(rect.x + option_adjust_x, rect.y + option_adjust_y));
+
+		adjust_option();
+	}
+}
+
+void Player::plus_barrier() {
+
+	if (barrier_count < 5) {
+		barrier_count++;
+	}
+
+	if (barrier_exist == false) {
+		barrier_exist = true;
+	}
+
+
 }
 
 void Player::control_option() {
@@ -433,4 +551,133 @@ void Player::adjust_option() {
 			option[o].set_pos_y(memory_pos[45].y);
 		}
 	}
+}
+
+void Player::control_barrier() {
+
+	barrier.update(d_time, rect.x + rect.w / 2, rect.y + rect.h / 2);
+
+	//バリア削除
+
+	if (barrier.get_delete() == true) {
+		barrier_count--;
+		barrier.set_renew();
+	}
+
+	//バリア有無
+	if (barrier_count <= 0) {
+		barrier_exist = false;
+	}
+	else {
+		barrier_exist = true;
+	}
+
+}
+
+void Player::set_miss() {
+
+	miss = true;
+
+	//キャッチャーを起動できなくする
+	catcher.set_miss(true);
+
+	//無敵付与
+	muteki_count = 5;
+}
+
+//ゲームオーバー用のミス
+void Player::set_miss_gameover() {
+
+	miss = true;
+
+	//キャッチャーを起動できなくする
+	catcher.set_miss(true);
+
+	//無敵付与
+	muteki_count = 5;
+
+	//ゲームオーバー用のシーンへ
+	miss_scene = 100;
+}
+
+void Player::update_miss() {
+
+	miss_count += d_time;
+
+	if (miss_scene == 0) {
+
+		//爆発エフェクト用
+		if (miss_count >= 1) {
+
+			miss_scene++;
+		}
+
+	}
+	else if (miss_scene == 1) {
+
+		//自動復帰用
+		rect.x = -200;
+		rect.y = 1080 / 2 - rect.h / 2;
+
+		//キャッチャーリセット
+		catcher.reset();
+		//キャッチャー位置調整
+		catcher.first(rect.x, rect.y);
+
+		//キャッチャーエラーリセット
+		catch_error_count = 0;
+
+		//プレイヤーリセット
+		reset_common();
+
+		miss_scene++;
+	}
+	else if (miss_scene == 2) {
+
+		//移動
+
+		rect.x += 400 * d_time;
+
+		//キャッチャー位置調整
+		catcher.first(rect.x, rect.y);
+
+		if (rect.x >= 400) {
+
+			//オプション処理
+			set_option_memory();
+
+			//終了処理
+			miss = false;
+			miss_scene = 0;
+			miss_count = 0;
+			catcher.set_miss(false);
+		}
+	}
+
+
+	//ゲームオーバー用のミス
+
+	if (miss_scene == 100) {
+
+		//爆発エフェクト用
+		if (miss_count >= 1) {
+
+			miss_scene++;
+		}
+
+	}
+	else if (miss_scene == 101) {
+
+		if (miss_count > 3) {
+
+			//終了処理
+			miss = false;
+			miss_scene = 0;
+			miss_count = 0;
+
+			Print << U"pass";
+		}
+	}
+
+
 }

@@ -61,10 +61,14 @@ void Barrier::make_triangle_down(int _x, int _y, int _w, int _h) {
 
 }
 
-void Barrier::update(double _p_x, double _p_y) {
+void Barrier::update(double _d_time,double _p_x, double _p_y) {
 
 	for (size_t t = 0; t < triangle.size();t++) {
-		moved_triangle[t] = triangle[t].movedBy(_p_x, _p_y);
+		moved_triangle[t] = triangle[t].movedBy(_p_x - 50, _p_y - 45);
+	}
+
+	if (damaged==true) {
+		damage_count += _d_time;
 	}
 }
 

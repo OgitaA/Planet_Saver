@@ -18,6 +18,9 @@ void Game::update_battle() {
 	//敵更新
 	update_enemy(d_time);
 
+	//プレイヤーと敵
+	player_vs_enemy();
+
 	//アイテム
 	update_item(d_time);
 
@@ -56,6 +59,15 @@ void Game::update_battle() {
 	//エフェクト更新
 	update_my_effect(d_time);
 
+	//エネミー弾vsプレイヤー
+	player_vs_enemy_bullet();
+
+	//エネミー弾vsプレイヤーバリア
+	player_barrier_enemy_bullet();
+
+	//エフェクト削除
+	delete_my_effect();
+
 	//文字エフェクト生成
 	make_moji_effect();
 
@@ -77,12 +89,6 @@ void Game::update_battle() {
 	//敵削除
 	delete_enemy();
 
-	//プレイヤーと敵
-	player_vs_enemy();
-
-	//ミス判定・処理
-	miss();
-
 	//ステージ更新
 	update_stage(d_time);
 
@@ -92,6 +98,8 @@ void Game::update_battle() {
 	//背景モノ更新
 	update_back_object(d_time);
 
+	//ゲームオーバーへ
+	go_gameover();
 	
 }
 
@@ -251,6 +259,11 @@ void Game::delete_enemy() {
 
 			plus_score(e.get_score());
 
+			double center_x = e.get_center_x();
+			double center_y = e.get_center_y();
+
+			my_effect.push_back(My_Effect(U"explode",center_x, center_y));
+
 			return true;
 		}
 		else {
@@ -314,7 +327,7 @@ void Game::player_vs_enemy() {
 
 	for (auto& e : enemy) {
 
-		RectF p_r = player.get_rect();
+		RectF p_r = player.get_hit_rect();
 		RectF e_r = e.get_rect();
 
 		
@@ -333,26 +346,99 @@ void Game::player_vs_enemy() {
 	}
 
 	if (hit == true) {
-		player.damage();
+		miss();
 	}
 
 
 }
 
+
+void Game::player_vs_enemy_bullet() {
+
+	enemy_bullet.remove_if([&](Enemy_Bullet e) {
+
+		if (player.get_hit_rect().intersects(e.get_circle())) {
+
+			miss();
+
+			return true;
+		}
+		else {
+
+			return false;
+		}
+
+	});
+}
+
+void Game::player_barrier_enemy_bullet() {
+
+	//バリアが存在する
+	if (player.get_barrier_exist() == true) {
+
+		enemy_bullet.remove_if([&](Enemy_Bullet e) {
+
+			bool hit = false;
+
+		for (size_t b = 0; b < player.get_barrier_triangle().size(); b++) {
+
+			if (player.get_barrier_triangle_one(b).intersects(e.get_circle())) {
+
+				player.damage_barrier();
+				return true;
+			}
+
+			
+		}
+
+		return false;
+
+
+		});
+	}
+}
+
 void Game::miss() {
 
-	if (player.get_miss() == true) {
+	//プレイヤーが無敵でないなら
+	if (player.get_muteki() == false) {
 
-		//残機減らす
-		remain--;
+		//プレイヤーがまだミスでないなら
+		if (player.get_miss() == false) {
 
-		//残機が0ならゲームオーバーへ
-		if (remain <= 0) {
+			//残機減らす
+			remain--;
+
+			if (remain > 0) {
+				player.set_miss();
+			}
+			else {
+				//プレイヤーにミスの処理（復帰なし）
+				player.set_miss_gameover();
+			}
+
+			//文字エフェクト削除
+			moji_effect.clear();
+
+			//ゲージエフェクト削除
+			gauge_effect.clear();
 
 		}
 	}
 }
 
+void Game::go_gameover() {
+
+	//残機がない
+	if (remain <= 0) {
+
+		//プレイヤーの処理が終わった
+
+		if (player.get_miss() == false) {
+			main_scene = U"gameover";
+		}
+	}
+}
 
 void Game::update_enemy(double _d_time) {
 
@@ -441,6 +527,21 @@ void Game::update_my_effect(double _d_time) {
 	}
 }
 
+void Game::delete_my_effect() {
+
+	my_effect.remove_if([&](My_Effect e) {
+
+		if (e.get_delete() == true) {
+			return true;
+		}
+
+	return false;
+
+
+	});
+}
+
+
 void Game::make_moji_effect() {
 
 	//Player文字関連
@@ -490,22 +591,35 @@ void Game::update_back(double _d_time) {
 void Game::update_back_object(double _d_time) {
 
 	//ステージスクロール
-	double scroll_speed = stage_scroll_speed * _d_time;
-	double scroll_speed_2 = stage_scroll_speed_2 * _d_time;
+	double scroll_speed = stage_scroll_speed_layer_0 * _d_time;
+	double scroll_speed_2 = stage_scroll_speed_layer_1 * _d_time;
+
+	double up_scroll_speed = stage_up_scroll_speed * _d_time;
 
 	for (auto& b : back_object) {
 
-		if (b.get_layer() == 0) {
-			b.update(scroll_speed);
+		String direction = b.get_direction();
+		int layer = b.get_layer();
+
+
+		if (direction == U"left") {
+
+			if (layer == 0) {
+				b.update(scroll_speed);
+			}
+			else if (layer == 1) {
+				b.update(scroll_speed_2);
+			}
 		}
+		else if (direction == U"up") {
+
+			b.update(scroll_speed, up_scroll_speed);
+		}
+		
+
+		
 	}
 
-	for (auto& b : back_object) {
-
-		if (b.get_layer() == 1) {
-			b.update(scroll_speed_2);
-		}
-	}
 }
 
 
@@ -520,6 +634,16 @@ void Game::plus_score(int v) {
 
 void Game::make_gauge_effect() {
 
+	for (size_t e = 0; e < player.get_gauge_effect_data_size(); e++) {
+
+		String type = player.get_gauge_effect_data_type(e);
+		int pos = player.get_gauge_effect_data_pos(e);
+
+		gauge_effect.push_back(Gauge_Effect(type,pos));
+
+	}
+
+	player.delete_gauge_effect_data();
 }
 
 void Game::delete_gauge_effect() {
@@ -542,3 +666,7 @@ void Game::update_gauge_effect(double _d_time) {
 		e.update(_d_time);
 	}
 }
+
+
+
+

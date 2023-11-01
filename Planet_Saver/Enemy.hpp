@@ -2,6 +2,8 @@
 
 # include <Siv3D.hpp> // Siv3D v0.6.12
 
+
+
 class Enemy {
 
 public:
@@ -15,7 +17,7 @@ public:
 
 	void each();
 
-	void damage(int v) { hp -= v; if (hp < 0) { hp = 0; } }
+	void damage(int);
 	int get_hp() { return hp; }
 	double get_count() { return count; }
 	bool get_boss() { return boss; }
@@ -27,6 +29,8 @@ public:
 	void move();
 
 	void straight_move();
+	void curve_move();
+
 
 	int get_score() { return score; }
 
@@ -34,6 +38,19 @@ public:
 	RectF get_rect() { return rect; }
 	Circle get_circle() { return circle; }
 	Quad get_quad();
+
+	double get_center_x() { return rect.x + rect.w / 2; }
+	double get_center_y() { return rect.y + rect.h / 2; }
+
+	//shader
+	bool get_white() {
+		if (white_count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	double get_white_count() { return white_count; }
 
 private:
 
@@ -64,4 +81,27 @@ private:
 	int make_bullet = -1;
 
 	bool boss = false;
+
+	//shader
+
+	bool white = false;
+
+	double white_count = 0;
+
+	//Move_V
+
+	double start_x = 0;
+	double start_y = 0;
+
+	double move_count = 0;
+
+
+
+	double move_v_0 = 0;
+
+	double move_angle = 0;
+
+	double move_v_1 = 0;
+
 };
+

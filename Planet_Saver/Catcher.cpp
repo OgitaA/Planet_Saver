@@ -27,11 +27,14 @@ void Catcher::update(double _d_time, double _p_x, double _p_y, String _mode) {
 
 	if (operation == false) {
 
-		if (KeyZ.down()) {
+		if(miss==false){
 
-			if (error == false) {
+			if (KeyZ.down()) {
 
-				operation = true;
+				if (error == false) {
+
+					operation = true;
+				}
 			}
 		}
 	}
@@ -145,3 +148,4 @@ void Catcher::draw() {
 	//hit_rect.drawFrame(5, Palette::Blue);
 
 }
+

@@ -47,6 +47,11 @@ public:
 
 	void set_error(bool v) { error = v; }
 
+	//ミスの処理
+	void set_miss(bool v) { miss = v; }
+
+	
+
 private:
 
 	RectF rect;
@@ -81,5 +86,8 @@ private:
 	int item_max = 3;
 
 	bool error = false;
+
+	//プレイヤーのミスをうける
+	bool miss = false;
 	
 };

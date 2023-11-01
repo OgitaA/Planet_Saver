@@ -6,10 +6,12 @@ class Enemy_Bullet {
 
 public:
 
-	Enemy_Bullet(String, double, double, double, int, double,double);
+	Enemy_Bullet(String, double, double,int, double,double);
 
 	void update(double);
 	void draw();
+
+	void set_up();
 
 	Circle get_circle() { return circle; }
 	int get_power() { return power; }

@@ -5,27 +5,28 @@ class Back_Object_Data {
 
 public:
 
-	Back_Object_Data(String _name, int _y, double _emerge_count) {
-		name = _name;
-		y = _y;
-		emerge_count = _emerge_count;
-	}
+	//ニュー
+	Back_Object_Data(String _name, String _direction,int _x,int _y,int _layer,double _count) {
 
-	Back_Object_Data(String _name, int _y, double _emerge_count, String _layer) {
 		name = _name;
+		direction = _direction;
+		x = _x;
 		y = _y;
-		emerge_count = _emerge_count;
 		layer = _layer;
+		emerge_count = _count;
 	}
 
-	Back_Object_Data(String _name, int _y, double _emerge_count, int _random_v) {
+	//ニューランダム
+	Back_Object_Data(String _name, String _direction, int _x, int _y, int _layer,double _count,int _random_v) {
+
 		name = _name;
+		direction = _direction;
+		x = _x;
 		y = _y;
-		emerge_count = _emerge_count;
+		layer = _layer;
+		emerge_count = _count;
 		random_v = _random_v;
 	}
-
-
 
 	void update(double _d_time) {
 		count += _d_time;
@@ -33,10 +34,13 @@ public:
 
 	String get_name() { return name; }
 
+    String get_direction() { return direction; }
+
 	bool get_emerge() {
 
 		if (count >= emerge_count) {
-
+			//Print << U"count::" << count;
+			//Print << U"emerge_count::" << emerge_count;
 			count = 0;
 			return true;
 		}
@@ -44,6 +48,8 @@ public:
 			return false;
 		}
 	}
+
+	int get_x() { return x; }
 
 	int get_y() {
 
@@ -64,19 +70,24 @@ public:
 
 	}
 
-	String get_layer() { return layer; }
+	int get_layer() { return layer; }
+
+	
 
 private:
 
-	String name = U"";
-
 	double count = 0;
-
 	double emerge_count = 10;
 
+	String name = U"";
+	String direction = U"";
+	
+
+	int x = 0;
 	int y = 600;
 
+	
+	int layer = 0;
 	int random_v = 0;
-
-	String layer = U"0";
+	
 };

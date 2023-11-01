@@ -43,6 +43,18 @@ void Game::update_change_scene() {
 			//シーンの変更
 			main_scene = change_scene_go_scene;
 
+			//bgmを止める
+			stop_bgm();
+
+			//対応するbgmを流す
+			start_bgm(main_scene);
+
+
+			//バトルのみ
+			if (main_scene == U"battle") {
+				make_stage(stage);
+			}
+
 		}
 
 	}
@@ -75,23 +87,37 @@ void Game::draw_change_scene() {
 
 
 //呼ぶとシーンが変わる
-void Game::change_scene(int v) {
+void Game::change_scene(String v) {
 
 	change_scene_process = true;
 	change_scene_go_scene = v;
+
 }
 
 void Game::change_scene_title() {
 
-	change_scene(100);
+	change_scene(U"title");
 }
 
 void Game::change_scene_battle() {
 
-	change_scene(0);
+	change_scene(U"battle");
 }
 
 void Game::change_scene_stage_select() {
 
-	change_scene(1);
+	change_scene(U"stage_select");
+}
+
+
+void Game::start_bgm(String v) {
+
+	if (v == U"title") {
+		play_bgm(0);
+	}
+	else if (v == U"stage_select") {
+		play_bgm(1);
+	}
+
+
 }
