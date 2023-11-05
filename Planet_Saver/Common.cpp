@@ -31,7 +31,7 @@ void Game::draw_indention(Font _font, String _text, int _x, int _y, int _wide) {
 			penPos.x = basePos.x;
 
 			// ペンの Y 座標をフォントの高さ分進める
-			penPos.y += _font.height();
+			penPos.y += _font.height() + 10;
 
 			//カウントリセット
 			count_w = 0;

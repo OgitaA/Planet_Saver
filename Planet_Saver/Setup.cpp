@@ -64,6 +64,10 @@ void Game::load_image() {
 	TextureAsset::Register(U"back_object_crowd", U"image/battle/back/back_object/crowd.png");
 	TextureAsset::Load(U"back_object_crowd");
 
+	TextureAsset::Register(U"back_object_crowd_2", U"image/battle/back/back_object/crowd_2.png");
+	TextureAsset::Load(U"back_object_crowd_2");
+
+
 	TextureAsset::Register(U"back_object_bill", U"image/battle/back/back_object/bill.png");
 	TextureAsset::Load(U"back_object_bill");
 
@@ -91,9 +95,60 @@ void Game::load_image() {
 	TextureAsset::Register(U"back_object_bubble", U"image/battle/back/back_object/bubble.png");
 	TextureAsset::Load(U"back_object_bubble");
 
+	TextureAsset::Register(U"back_object_fish_1", U"image/battle/back/back_object/fish_1.png");
+	TextureAsset::Load(U"back_object_fish_1");
+
+	TextureAsset::Register(U"back_object_fish_2", U"image/battle/back/back_object/fish_2.png");
+	TextureAsset::Load(U"back_object_fish_2");
+
+	TextureAsset::Register(U"back_object_stone_1", U"image/battle/back/back_object/stone_1.png");
+	TextureAsset::Load(U"back_object_stone_1");
+
+	TextureAsset::Register(U"back_object_stone_2", U"image/battle/back/back_object/stone_2.png");
+	TextureAsset::Load(U"back_object_stone_2");
+
+	TextureAsset::Register(U"back_object_stone_3", U"image/battle/back/back_object/stone_3.png");
+	TextureAsset::Load(U"back_object_stone_3");
+
+	TextureAsset::Register(U"back_object_stone_4", U"image/battle/back/back_object/stone_4.png");
+	TextureAsset::Load(U"back_object_stone_4");
+
+	TextureAsset::Register(U"back_object_stone_5", U"image/battle/back/back_object/stone_5.png");
+	TextureAsset::Load(U"back_object_stone_5");
+
+	TextureAsset::Register(U"back_object_stone_6", U"image/battle/back/back_object/stone_6.png");
+	TextureAsset::Load(U"back_object_stone_6");
+
+	TextureAsset::Register(U"back_object_coral_1", U"image/battle/back/back_object/coral_1.png");
+	TextureAsset::Load(U"back_object_coral_1");
+
+	TextureAsset::Register(U"back_object_coral_2", U"image/battle/back/back_object/coral_2.png");
+	TextureAsset::Load(U"back_object_coral_2");
+
+	TextureAsset::Register(U"back_object_factory_1", U"image/battle/back/back_object/factory_1.png");
+	TextureAsset::Load(U"back_object_factory_1");
+
+	TextureAsset::Register(U"back_object_factory_2", U"image/battle/back/back_object/factory_2.png");
+	TextureAsset::Load(U"back_object_factory_2");
+
+	TextureAsset::Register(U"back_object_factory_3", U"image/battle/back/back_object/factory_3.png");
+	TextureAsset::Load(U"back_object_factory_3");
+
+	TextureAsset::Register(U"back_object_factory_4", U"image/battle/back/back_object/factory_4.png");
+	TextureAsset::Load(U"back_object_factory_4");
+
 	//player
 	TextureAsset::Register(U"player", U"image/battle/object/player/player.png");
 	TextureAsset::Load(U"player");
+
+	TextureAsset::Register(U"player_white", U"image/battle/object/player/player_white.png");
+	TextureAsset::Load(U"player_white");
+
+	TextureAsset::Register(U"barrier", U"image/battle/object/player/barrier.png");
+	TextureAsset::Load(U"barrier");
+
+	TextureAsset::Register(U"barrier_damage", U"image/battle/object/player/barrier_damage.png");
+	TextureAsset::Load(U"barrier_damage");
 
 	//player
 	TextureAsset::Register(U"player_burn", U"image/battle/object/player/player_burn.png");
@@ -128,8 +183,11 @@ void Game::load_image() {
 
 
 	//player_bullet
-	TextureAsset::Register(U"bullet", U"image/battle/object/player_bullet/normal.png");
-	TextureAsset::Load(U"bullet");
+	TextureAsset::Register(U"player_bullet_main", U"image/battle/object/player_bullet/main.png");
+	TextureAsset::Load(U"player_bullet_main");
+
+	TextureAsset::Register(U"player_bullet_sub", U"image/battle/object/player_bullet/sub.png");
+	TextureAsset::Load(U"player_bullet_sub");
 
 	//enemy
 	TextureAsset::Register(U"enemy", U"image/battle/object/enemy/normal.png");
@@ -138,12 +196,76 @@ void Game::load_image() {
 	TextureAsset::Register(U"enemy_normal", U"image/battle/object/enemy/normal.png");
 	TextureAsset::Load(U"enemy_normal");
 
-	TextureAsset::Register(U"enemy_elite", U"image/battle/object/enemy/elite.png");
-	TextureAsset::Load(U"enemy_elite");
+	TextureAsset::Register(U"enemy_garbage_can", U"image/battle/object/enemy/garbage_can.png");
+	TextureAsset::Load(U"enemy_garbage_can");
+
+	TextureAsset::Register(U"enemy_garbage_can_elite", U"image/battle/object/enemy/garbage_can_elite.png");
+	TextureAsset::Load(U"enemy_garbage_can_elite");
+
+	TextureAsset::Register(U"enemy_rumba", U"image/battle/object/enemy/rumba.png");
+	TextureAsset::Load(U"enemy_rumba");
+
+	TextureAsset::Register(U"enemy_rumba_elite", U"image/battle/object/enemy/rumba_elite.png");
+	TextureAsset::Load(U"enemy_rumba_elite");
+
+	TextureAsset::Register(U"enemy_rumba_big", U"image/battle/object/enemy/rumba_big.png");
+	TextureAsset::Load(U"enemy_rumba_big");
+
+	TextureAsset::Register(U"enemy_rumba_green", U"image/battle/object/enemy/rumba_green.png");
+	TextureAsset::Load(U"enemy_rumba_green");
+
+	TextureAsset::Register(U"enemy_rumba_baby", U"image/battle/object/enemy/rumba_baby.png");
+	TextureAsset::Load(U"enemy_rumba_baby");
+
+	TextureAsset::Register(U"enemy_boss_1", U"image/battle/object/enemy/boss_1.png");
+	TextureAsset::Load(U"enemy_boss_1");
+
+	TextureAsset::Register(U"enemy_maker", U"image/battle/object/enemy/maker.png");
+	TextureAsset::Load(U"enemy_maker");
+
+
+	TextureAsset::Register(U"enemy_rumba_marine", U"image/battle/object/enemy/rumba_marine.png");
+	TextureAsset::Load(U"enemy_rumba_marine");
+
+	TextureAsset::Register(U"enemy_rumba_marine_elite", U"image/battle/object/enemy/rumba_marine_elite.png");
+	TextureAsset::Load(U"enemy_rumba_marine_elite");
+
+	TextureAsset::Register(U"enemy_rumba_marine_big", U"image/battle/object/enemy/rumba_marine_big.png");
+	TextureAsset::Load(U"enemy_rumba_marine_big");
+
+	TextureAsset::Register(U"enemy_rumba_track", U"image/battle/object/enemy/rumba_track.png");
+	TextureAsset::Load(U"enemy_rumba_track");
+
+	TextureAsset::Register(U"enemy_rumba_bomb", U"image/battle/object/enemy/rumba_bomb.png");
+	TextureAsset::Load(U"enemy_rumba_bomb");
+
+	TextureAsset::Register(U"enemy_rumba_neo", U"image/battle/object/enemy/rumba_neo.png");
+	TextureAsset::Load(U"enemy_rumba_neo");
+
+	TextureAsset::Register(U"enemy_rumba_support", U"image/battle/object/enemy/rumba_support.png");
+	TextureAsset::Load(U"enemy_rumba_support");
+
+	TextureAsset::Register(U"enemy_rumba_support_2", U"image/battle/object/enemy/rumba_support_2.png");
+	TextureAsset::Load(U"enemy_rumba_support_2");
+
+	TextureAsset::Register(U"enemy_rumba_red", U"image/battle/object/enemy/rumba_red.png");
+	TextureAsset::Load(U"enemy_rumba_red");
+
+	TextureAsset::Register(U"enemy_rumba_black", U"image/battle/object/enemy/rumba_black.png");
+	TextureAsset::Load(U"enemy_rumba_black");
+
+	TextureAsset::Register(U"enemy_hard", U"image/battle/object/enemy/hard.png");
+	TextureAsset::Load(U"enemy_hard");
 
 	//enemy_bullet
 	TextureAsset::Register(U"enemy_bullet_normal", U"image/battle/object/enemy_bullet/normal.png");
 	TextureAsset::Load(U"enemy_bullet_normal");
+
+	TextureAsset::Register(U"enemy_bullet_big", U"image/battle/object/enemy_bullet/big.png");
+	TextureAsset::Load(U"enemy_bullet_big");
+
+	TextureAsset::Register(U"enemy_bullet_green", U"image/battle/object/enemy_bullet/green.png");
+	TextureAsset::Load(U"enemy_bullet_green");
 
 	//Item
 	TextureAsset::Register(U"burn_item", U"image/battle/object/item/burn.png");
@@ -191,13 +313,27 @@ void Game::load_image() {
 	TextureAsset::Register(U"item_bag", U"image/battle/object/item/bag.png");
 	TextureAsset::Load(U"item_bag");
 
+	TextureAsset::Register(U"item_plastic_bag", U"image/battle/object/item/plastic_bag.png");
+	TextureAsset::Load(U"item_plastic_bag");
+
+	TextureAsset::Register(U"item_bottle", U"image/battle/object/item/bottle.png");
+	TextureAsset::Load(U"item_bottle");
+
+	TextureAsset::Register(U"item_beer_bottle", U"image/battle/object/item/beer_bottle.png");
+	TextureAsset::Load(U"item_beer_bottle");
+
+	TextureAsset::Register(U"item_danbo", U"image/battle/object/item/danbo.png");
+	TextureAsset::Load(U"item_danbo");
+
+	TextureAsset::Register(U"item_milk", U"image/battle/object/item/milk.png");
+	TextureAsset::Load(U"item_milk");
 
 	//Effect
 
 	TextureAsset::Register(U"effect_explode", U"image/battle/object/effect/explode.png");
 	TextureAsset::Load(U"effect_explode");
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 7; i++) {
 
 		String image_name = U"effect_explode_" + Format(i);
 		String adress = U"image/battle/object/effect/explode_" + Format(i) + U".png";
@@ -239,6 +375,13 @@ void Game::load_image() {
 	TextureAsset::Register(U"gauge_effect", U"image/battle/UI/status/gauge_effect.png");
 	TextureAsset::Load(U"gauge_effect");
 
+	//Stage_Clear
+	TextureAsset::Register(U"stage_clear_doctor", U"image/battle/UI/stage_clear/doctor.png");
+	TextureAsset::Load(U"stage_clear_doctor");
+
+	//Game_Over
+	TextureAsset::Register(U"game_over_doctor", U"image/battle/UI/game_over/doctor.png");
+	TextureAsset::Load(U"game_over_doctor");
 
 
 
@@ -328,9 +471,10 @@ void Game::load_font() {
 
 void Game::debug_data() {
 
-	//main_scene = U"title";
+	main_scene = U"title";
 
-	main_scene = U"gameover";
+	//main_scene = U"stage_select";
+	//main_scene = U"stageclear";
 
 	stage = 1;
 	

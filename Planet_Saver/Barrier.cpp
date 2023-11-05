@@ -4,8 +4,8 @@
 
 Barrier::Barrier() {
 
-	int w = 150;
-	int h = 90;
+	int w = 30 * 6;
+	int h = 60 * 2;
 
 	int unit_w = w / 6;
 	int unit_h = h / 2;
@@ -64,17 +64,47 @@ void Barrier::make_triangle_down(int _x, int _y, int _w, int _h) {
 void Barrier::update(double _d_time,double _p_x, double _p_y) {
 
 	for (size_t t = 0; t < triangle.size();t++) {
-		moved_triangle[t] = triangle[t].movedBy(_p_x - 50, _p_y - 45);
+		moved_triangle[t] = triangle[t].movedBy(_p_x - 60, _p_y - 60);
 	}
 
 	if (damaged==true) {
+
 		damage_count += _d_time;
+
+		flash_count += _d_time;
+
+		if (flash_count > 0.1) {
+
+			if (damage_flash == false) {
+				damage_flash = true;
+			}
+			else if (damage_flash == true) {
+				damage_flash = false;
+			}
+
+			flash_count = 0;
+		}
 	}
 }
 
 void Barrier::draw() {
 
+	/*
+
 	for (auto& t : moved_triangle) {
 		t.draw(Palette::Green);
+	}
+*/
+
+
+	int x = moved_triangle[0].p0.x - 30;
+	int y = moved_triangle[0].p1.y - 60;
+
+
+
+	TextureAsset(U"barrier").draw(x, y);
+
+	if (damage_flash == true) {
+		TextureAsset(U"barrier_damage").draw(x, y);
 	}
 }

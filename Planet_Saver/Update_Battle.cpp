@@ -18,6 +18,9 @@ void Game::update_battle() {
 	//敵更新
 	update_enemy(d_time);
 
+	//敵から敵を生成
+	make_enemy_by_enemy();
+
 	//プレイヤーと敵
 	player_vs_enemy();
 
@@ -100,7 +103,11 @@ void Game::update_battle() {
 
 	//ゲームオーバーへ
 	go_gameover();
-	
+
+	//ゲームクリアへ
+	go_stage_clear(d_time);
+
+	//Print << U"back_object_size::" << back_object.size();
 }
 
 void Game::update_player_bullet(double _d_time) {
@@ -116,9 +123,9 @@ void Game::delete_player_bullet() {
 	player_bullet.remove_if([&](Player_Bullet b) {
 
 		double b_x = b.get_circle().x;
-	double b_y = b.get_circle().y;
+	    double b_y = b.get_circle().y;
 
-	if (b_x<-200 or b_x>(1920 + 200) or b_y < -200 or b_y>1080 + 200) {
+	if (b_x<-80 or b_x>(1920 + 80) or b_y < -80 or b_y>1080 + 80) {
 		return true;
 	}
 	else {
@@ -133,7 +140,7 @@ void Game::delete_enemy_bullet() {
 	enemy_bullet.remove_if([&](Enemy_Bullet b) {
 
 		double b_x = b.get_circle().x;
-	double b_y = b.get_circle().y;
+	    double b_y = b.get_circle().y;
 
 	if (b_x<-200 or b_x>(1920 + 200) or b_y < -200 or b_y>1080 + 200) {
 		return true;
@@ -161,7 +168,10 @@ void Game::make_enemy() {
 				String name = e.get_name();
 				String pattern = e.get_pattern();
 				int x = e.get_x();
-				int y = e.get_y();
+
+				//UIフレーム分調整
+				int y = e.get_y() + 100;
+
 				int hp = e.get_hp();
 				int score = e.get_score();
 				String item = e.get_item();
@@ -189,7 +199,7 @@ void Game::make_item() {
 
 				String name = i.get_name();
 				int x = i.get_x();
-				int y = i.get_y();
+				int y = i.get_y() + 100;
 
 				item.push_back(Item(name, x, y));
 
@@ -212,39 +222,71 @@ void Game::update_enemy_bullet(double _d_time) {
 
 void Game::player_bullet_vs_enemy() {
 
-	player_bullet.remove_if([&](Player_Bullet b) {
+	
 
-		double b_x = b.get_circle().x;
-	double b_y = b.get_circle().y;
+		player_bullet.remove_if([&](Player_Bullet b) {
 
-	Circle b_c = b.get_circle();
-	int b_p = b.get_power();
+			double b_x = b.get_circle().x;
+		double b_y = b.get_circle().y;
 
+		Circle b_c = b.get_circle();
+		int b_p = b.get_power();
 
-	for (auto& e : enemy) {
+		bool bullet_delete = false;
 
-		bool hit = false;
+		for (auto& e : enemy) {
 
-		String shape = e.get_shape();
+			//弾が削除済みでない
+			if (bullet_delete == false) {
 
-		if (shape == U"Quad") {
-			if (b_c.intersects(e.get_quad())) {
-				hit = true;
+				//敵に当たったか
+				bool hit = false;
+
+				//ボス用
+				if (e.get_boss_broken() == false) {
+
+					if (e.get_boss_armer() == false) {
+
+						String shape = e.get_shape();
+
+						if (shape == U"Quad") {
+							if (b_c.intersects(e.get_quad())) {
+								hit = true;
+							}
+						}
+						else if (shape == U"Circle") {
+							if (b_c.intersects(e.get_circle())) {
+								hit = true;
+							}
+						}
+						else if (shape == U"Rect") {
+							if (b_c.intersects(e.get_rect())) {
+								hit = true;
+							}
+						}
+					}
+				}
+
+				//当たった時
+				if (hit == true) {
+
+					e.damage(b_p);
+
+					bullet_delete = true;
+				}
 			}
 		}
 
-		//当たった時
-		if (hit==true) {
 
-			e.damage(b_p);
-
+		//敵に当たっていたなら弾削除
+		if (bullet_delete == true) {
 			return true;
 		}
-	}
 
-	return false;
+		return false;
 
-		});
+			});
+	
 }
 
 void Game::delete_enemy() {
@@ -255,16 +297,46 @@ void Game::delete_enemy() {
 
 		if (e.get_hp() <= 0) {
 
-			make_item(e.get_item(), e.get_rect().x, e.get_rect().y);
+			if (e.get_boss() == false) {
 
-			plus_score(e.get_score());
+				String item_name = e.get_item();
 
-			double center_x = e.get_center_x();
-			double center_y = e.get_center_y();
+				if (item_name != U"no") {
 
-			my_effect.push_back(My_Effect(U"explode",center_x, center_y));
+					make_item(e.get_item(), e.get_rect().x, e.get_rect().y);
 
-			return true;
+				}
+
+				plus_score(e.get_score());
+
+				double center_x = e.get_center_x();
+				double center_y = e.get_center_y();
+
+				int explode_size = e.get_explode_size();
+
+				if (explode_size == 1) {
+
+					my_effect.push_back(My_Effect(U"explode", center_x, center_y));
+
+				}
+				else if (explode_size == 2) {
+
+					my_effect.push_back(My_Effect(U"explode_custom_1.5", center_x, center_y));
+				}
+				else if (explode_size == 3) {
+
+					my_effect.push_back(My_Effect(U"explode_custom_2", center_x, center_y));
+				}
+				//Print << U"center_x::" << center_x;
+				//Print << U"center_y::" << center_y;
+
+				return true;
+
+			}
+			else {
+				return false;
+			}
+		
 		}
 		else {
 			return false;
@@ -272,6 +344,20 @@ void Game::delete_enemy() {
 
 
 	});
+
+
+	//ボスの場合破壊フラグ
+	for (auto& e : enemy) {
+
+		//ボスなら
+		if (e.get_boss() == true) {
+
+			if (e.get_hp() <= 0) {
+				e.set_boss_broken();
+				stage_clear_flag = true;
+			}
+		}
+	}
 
 	//時間退場
 
@@ -323,107 +409,136 @@ void Game::delete_item() {
 
 void Game::player_vs_enemy() {
 
-	bool hit = false;
+	if (stage_clear_flag == false) {
 
-	for (auto& e : enemy) {
+		bool hit = false;
 
-		RectF p_r = player.get_hit_rect();
-		RectF e_r = e.get_rect();
+		for (auto& e : enemy) {
 
-		
+			RectF p_r = player.get_hit_rect();
+			RectF e_r = e.get_rect();
 
-		String shape = e.get_shape();
 
-		if (shape == U"Quad") {
 
-			if (p_r.intersects(e.get_quad())) {
-				hit = true;
+			String shape = e.get_shape();
+
+			if (shape == U"Quad") {
+
+				if (p_r.intersects(e.get_quad())) {
+					hit = true;
+				}
 			}
+			else if (shape == U"Circle") {
+
+				if (p_r.intersects(e.get_circle())) {
+					hit = true;
+				}
+			}
+			else if (shape == U"Rect") {
+
+				if (p_r.intersects(e.get_rect())) {
+					hit = true;
+				}
+			}
+
+
+
 		}
 
+		if (hit == true) {
+			miss();
+		}
 
-		
 	}
-
-	if (hit == true) {
-		miss();
-	}
-
-
 }
 
 
 void Game::player_vs_enemy_bullet() {
 
-	enemy_bullet.remove_if([&](Enemy_Bullet e) {
+	if (stage_clear_flag == false) {
 
-		if (player.get_hit_rect().intersects(e.get_circle())) {
+		//バリアがない
+		if (player.get_barrier_exist() == false) {
 
-			miss();
+			enemy_bullet.remove_if([&](Enemy_Bullet e) {
 
-			return true;
+				if (player.get_hit_rect().intersects(e.get_circle())) {
+
+
+
+					miss();
+
+
+
+					return true;
+				}
+				else {
+
+					return false;
+				}
+
+			});
+
 		}
-		else {
-
-			return false;
-		}
-
-	});
+	}
 }
 
 void Game::player_barrier_enemy_bullet() {
 
-	//バリアが存在する
-	if (player.get_barrier_exist() == true) {
+	if (stage_clear_flag == false) {
 
-		enemy_bullet.remove_if([&](Enemy_Bullet e) {
+		//バリアが存在する
+		if (player.get_barrier_exist() == true) {
 
-			bool hit = false;
+			enemy_bullet.remove_if([&](Enemy_Bullet e) {
 
-		for (size_t b = 0; b < player.get_barrier_triangle().size(); b++) {
 
-			if (player.get_barrier_triangle_one(b).intersects(e.get_circle())) {
+				for (size_t b = 0; b < player.get_barrier_triangle().size(); b++) {
 
-				player.damage_barrier();
-				return true;
-			}
+					if (player.get_barrier_triangle_one(b).intersects(e.get_circle())) {
 
-			
+						player.damage_barrier();
+						return true;
+					}
+
+
+				}
+
+			return false;
+
+
+			});
 		}
-
-		return false;
-
-
-		});
 	}
 }
 
+//他の被弾系関数から呼ばれる
 void Game::miss() {
 
 	//プレイヤーが無敵でないなら
 	if (player.get_muteki() == false) {
 
-		//プレイヤーがまだミスでないなら
-		if (player.get_miss() == false) {
+			//プレイヤーがまだミスでないなら(これからミス処理)
+			if (player.get_miss() == false) {
 
-			//残機減らす
-			remain--;
+				//残機減らす
+				remain--;
 
-			if (remain > 0) {
-				player.set_miss();
+				if (remain > 0) {
+					player.set_miss();
+				}
+				else {
+					//プレイヤーにミスの処理（復帰なし）
+					player.set_miss_gameover();
+				}
+
+				//文字エフェクト削除
+				moji_effect.clear();
+
+				//ゲージエフェクト削除
+				gauge_effect.clear();
+
 			}
-			else {
-				//プレイヤーにミスの処理（復帰なし）
-				player.set_miss_gameover();
-			}
-
-			//文字エフェクト削除
-			moji_effect.clear();
-
-			//ゲージエフェクト削除
-			gauge_effect.clear();
-
-		}
 	}
 }
 
@@ -444,7 +559,18 @@ void Game::update_enemy(double _d_time) {
 
 	for (auto& e : enemy) {
 		e.update(_d_time);
+
+    //プレイヤーの位置を渡す
+
+		double angle = ToRadians(get_angle_e_to_p(e.get_rect()));
+
+		e.update_data(angle);
+
 	}
+
+	
+
+
 }
 
 
@@ -585,14 +711,17 @@ void Game::update_moji_effect(double _d_time) {
 
 void Game::update_back(double _d_time) {
 
-	back.update(_d_time);
+	back_ground.update(_d_time);
 }
 
 void Game::update_back_object(double _d_time) {
 
 	//ステージスクロール
-	double scroll_speed = stage_scroll_speed_layer_0 * _d_time;
-	double scroll_speed_2 = stage_scroll_speed_layer_1 * _d_time;
+	double scroll_speed_0 = stage_scroll_speed_layer_0 * _d_time;
+	double scroll_speed_1 = stage_scroll_speed_layer_1 * _d_time;
+	double scroll_speed_2 = stage_scroll_speed_layer_2 * _d_time;
+	double scroll_speed_3 = stage_scroll_speed_layer_3 * _d_time;
+
 
 	double up_scroll_speed = stage_up_scroll_speed * _d_time;
 
@@ -605,15 +734,21 @@ void Game::update_back_object(double _d_time) {
 		if (direction == U"left") {
 
 			if (layer == 0) {
-				b.update(scroll_speed);
+				b.update(scroll_speed_0);
 			}
 			else if (layer == 1) {
+				b.update(scroll_speed_1);
+			}
+			else if (layer == 2) {
 				b.update(scroll_speed_2);
+			}
+			else if (layer == 3) {
+				b.update(scroll_speed_3);
 			}
 		}
 		else if (direction == U"up") {
 
-			b.update(scroll_speed, up_scroll_speed);
+			b.update(scroll_speed_0, up_scroll_speed);
 		}
 		
 
@@ -666,6 +801,33 @@ void Game::update_gauge_effect(double _d_time) {
 		e.update(_d_time);
 	}
 }
+
+
+
+void Game::go_stage_clear(double _d_time) {
+
+	if (stage_clear_flag == true) {
+
+		stage_clear_count += _d_time;
+
+		if (stage_clear_count >= 5) {
+
+			//最後にボスのスコアを加算
+			int boss_score = 0;
+
+			for (auto& e : enemy) {
+				if (e.get_boss() == true) {
+					boss_score = e.get_score();
+				}
+			}
+
+			score += boss_score;
+
+			main_scene = U"stageclear";
+		}
+	}
+}
+
 
 
 

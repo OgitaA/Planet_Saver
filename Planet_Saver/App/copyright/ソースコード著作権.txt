@@ -1,0 +1,17 @@
+<テクスチャを白く点滅させるピクセルシェーダ>
+のサンプルコード
+
+https://scrapbox.io/voidproc-siv3d-examples/テクスチャを白く点滅させるピクセルシェーダ
+
+
+をvoidProcさんからお借りしました。
+
+ありがとうございます。
+
+
+
+MITライセンス
+
+Copyright (c) 2018-2023 voidProc
+
+https://opensource.org/license/mit/

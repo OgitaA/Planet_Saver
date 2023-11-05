@@ -18,10 +18,21 @@ Enemy_Bullet::Enemy_Bullet(String _name, double _x, double _y,int _power, double
 
 void Enemy_Bullet::set_up() {
 
-	if (name = U"normal") {
+	if (name == U"normal") {
 		circle.r = 46 / 2;
-	}
 
+		move_type = U"normal";
+	}
+	else if (name == U"big") {
+		circle.r = 80 / 2;
+
+		move_type = U"normal";
+	}
+	else if (name == U"green") {
+		circle.r = 46 / 2;
+
+		move_type = U"normal";
+	}
 }
 
 void Enemy_Bullet::update(double _d_time) {
@@ -42,7 +53,7 @@ void Enemy_Bullet::draw() {
 
 void Enemy_Bullet::move() {
 
-	if (name == U"normal") {
+	if (move_type == U"normal") {
 		move_normal();
 	}
 }

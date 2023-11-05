@@ -3,6 +3,9 @@
 #include"Option.hpp"
 #include"Barrier.hpp"
 #include"Gauge_Effect_Data.hpp"
+#include"My_Effect.hpp"
+
+# include <Siv3D.hpp> // Siv3D v0.6.12
 
 class Player {
 
@@ -111,14 +114,14 @@ public:
 
 	//バリア
 	bool get_barrier_exist() { return barrier_exist; }
-	Array<Triangle> get_barrier_triangle() { return barrier.get_triangle(); }
-    Triangle get_barrier_triangle_one(int _index) { return barrier.get_triangle(_index); }
+	Array<Triangle> get_barrier_triangle() { return barrier.get_moved_triangle(); }
+    Triangle get_barrier_triangle_one(int _index) { return barrier.get_moved_triangle_one(_index); }
 
 	void damage_barrier() { barrier.damage(); }
 	void control_barrier();
 	void plus_barrier();
 
-	
+	void draw_barrier();
 
 
 	//文字エフェクト
@@ -146,7 +149,19 @@ public:
 	void update_miss();
 	
 
+	//MyEffect
+	Array<My_Effect> my_effect;
 
+	void update_my_effect();
+
+
+	//自機以外の表示
+	void draw_sub();
+
+	//カウント
+	int get_burn_count() { return burn_count; }
+	int get_non_burn_count() { return non_burn_count; }
+	int get_recycle_count() { return recycle_count; }
 
 private:
 
@@ -199,6 +214,8 @@ private:
 
 	Barrier barrier;
 
+	
+
 
 	//ミス
 
@@ -206,4 +223,15 @@ private:
 	double miss_count = 0;
 	int miss_scene = 0;
 
+	double gameover_explode_count = 0;
+
+	//無敵用フラッシュ
+	bool muteki_flash = false;
+	double muteki_flash_count = 0;
+
+
+	//カウント
+	int burn_count = 0;
+	int non_burn_count = 0;
+	int recycle_count = 0;
 };

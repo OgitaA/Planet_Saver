@@ -2,13 +2,16 @@
 
 Player::Player() {
 
-	rect = Rect(1920 / 2, 1080 / 2, 119, 69);
+	rect = Rect(400, rect.y = 1080 / 2 - rect.h / 2, 119, 69);
 
 	reset();
 
 }
 
 void Player::reset() {
+
+	rect.x = 400;
+	rect.y = 1080 / 2 - rect.h / 2;
 
 	mode = U"burn";
 	muteki_count = 0;
@@ -33,12 +36,27 @@ void Player::reset() {
 	//キャッチャー使用可能
 	catcher.set_miss(false);
 
-	//オプション記憶
+	//オプション記憶準備（１００個）
 	set_option_memory();
 
+	//マイエフェクト
+	my_effect.clear();
+
+	//ゲームオーバー
+	gameover_explode_count = 0;
+
 	reset_common();
+
+	//無敵フラッシュ停止
+	muteki_flash = false;
+
+	//カウント
+	burn_count = 0;
+	non_burn_count = 0;
+	recycle_count = 0;
 }
 
+//初期化とミスの時に呼ばれる
 void Player::reset_common() {
 
 	shot_cool_time = 0;
@@ -53,6 +71,9 @@ void Player::reset_common() {
 	//バリア
 	barrier_exist = false;
 	barrier_count = 0;
+	barrier.reset();
+
+
 
 }
 
@@ -65,7 +86,29 @@ void Player::update(double _d_time) {
 	if (muteki_count > 0) {
 
 		muteki_count -= d_time;
+
 	}
+
+	if (muteki_count > 0) {
+
+		muteki_flash_count += d_time;
+
+		if (muteki_flash_count > 0.1) {
+
+			if (muteki_flash == true) {
+				muteki_flash = false;
+			}
+			else if (muteki_flash == false) {
+				muteki_flash = true;
+			}
+
+			muteki_flash_count = 0;
+		}
+	}
+	else {
+		muteki_flash = false;
+	}
+
 
 	//ショットクールタイム
 	if (shot_cool_time > 0) {
@@ -112,22 +155,24 @@ void Player::update(double _d_time) {
 	if (miss == true) {
 		update_miss();
 	}
+
+	//マイエフェクト
+	update_my_effect();
 }
+
+
 
 void Player::draw() {
 
+	/*
 	if (barrier_exist == true) {
 
 		barrier.draw();
-	}
+	}*/
 
-	
-	for (auto& o : option) {
 
-		o.draw();
-	}
 
-	catcher.draw();
+
 
 	String image_name = U"player_" + mode;
 
@@ -138,11 +183,40 @@ void Player::draw() {
 
 	TextureAsset(image_name).draw(rect.x, rect.y);
 
+
+
+	if (muteki_flash == true) {
+		TextureAsset(U"player_white").draw(rect.x, rect.y);
+	}
+
+	/*
 	if (muteki_count > 0) {
 		hit_rect.drawFrame(5, Palette::Red);
+	}*/
+
+	for (auto& e : my_effect) {
+		e.draw();
+	}
+
+}
+
+void Player::draw_sub() {
+
+	catcher.draw();
+
+	for (auto& o : option) {
+
+		o.draw();
 	}
 }
 
+void Player::draw_barrier() {
+
+	if (barrier_exist == true) {
+
+		barrier.draw();
+	}
+}
 
 void Player::move() {
 
@@ -385,6 +459,8 @@ void Player::plus_burn_gauge() {
 	if (burn_gauge >= 5) {
 		burn_gauge = 5;
 	}
+
+	burn_count++;
 }
 
 void Player::plus_non_burn_gauge() {
@@ -403,6 +479,8 @@ void Player::plus_non_burn_gauge() {
 	if (non_burn_gauge >= 5) {
 		non_burn_gauge = 5;
 	}
+
+	non_burn_count++;
 }
 
 void Player::plus_recycle_gauge() {
@@ -423,6 +501,8 @@ void Player::plus_recycle_gauge() {
 	if (recycle_gauge >= 5) {
 		recycle_gauge = 5;
 	}
+
+	recycle_count++;
 }
 
 void Player::set_gauge_effect_data(String _name, int _v) {
@@ -444,22 +524,22 @@ void Player::control_power() {
 void Player::control_speed() {
 
 	if (non_burn_gauge == 0) {
-		speed = 300;
+		speed = 350;
 	}
 	else if (non_burn_gauge == 1) {
-		speed = 400;
-	}
-	else if (non_burn_gauge == 2) {
 		speed = 450;
 	}
-	else if (non_burn_gauge == 3) {
+	else if (non_burn_gauge == 2) {
 		speed = 500;
 	}
-	else if (non_burn_gauge == 4) {
+	else if (non_burn_gauge == 3) {
 		speed = 550;
 	}
-	else if (non_burn_gauge == 5) {
+	else if (non_burn_gauge == 4) {
 		speed = 600;
+	}
+	else if (non_burn_gauge == 5) {
+		speed = 650;
 	}
 
 }
@@ -503,8 +583,10 @@ void Player::control_option() {
 
 	if (moved_x == true) {
 
+		//100個めの配列に新しい座標を入れる
 		memory_pos[99].x = rect.x + option_adjust_x;
 
+		//99回(100-1)ループ 最後の添え字は98
 		for (size_t m = 0; m < memory_pos.size() - 1; m++) {
 
 			memory_pos[m].x = memory_pos[m + 1].x;			
@@ -558,10 +640,17 @@ void Player::control_barrier() {
 	barrier.update(d_time, rect.x + rect.w / 2, rect.y + rect.h / 2);
 
 	//バリア削除
-
+	//バリアがダメージを受けて、点滅処理が終わったら
 	if (barrier.get_delete() == true) {
+
 		barrier_count--;
-		barrier.set_renew();
+
+		if (recycle_gauge > 0) {
+			recycle_gauge--;
+		}
+
+		//バリア初期化
+		barrier.reset();
 	}
 
 	//バリア有無
@@ -581,8 +670,10 @@ void Player::set_miss() {
 	//キャッチャーを起動できなくする
 	catcher.set_miss(true);
 
+
+
 	//無敵付与
-	muteki_count = 5;
+	muteki_count = 3;
 }
 
 //ゲームオーバー用のミス
@@ -594,7 +685,7 @@ void Player::set_miss_gameover() {
 	catcher.set_miss(true);
 
 	//無敵付与
-	muteki_count = 5;
+	muteki_count = 3;
 
 	//ゲームオーバー用のシーンへ
 	miss_scene = 100;
@@ -607,7 +698,9 @@ void Player::update_miss() {
 	if (miss_scene == 0) {
 
 		//爆発エフェクト用
-		if (miss_count >= 1) {
+		if (miss_count >= 0) {
+
+			my_effect.push_back(My_Effect(U"explode", rect.x + rect.w / 2, rect.y + rect.h / 2));
 
 			miss_scene++;
 		}
@@ -660,7 +753,9 @@ void Player::update_miss() {
 	if (miss_scene == 100) {
 
 		//爆発エフェクト用
-		if (miss_count >= 1) {
+		if (miss_count >= 0) {
+
+			my_effect.push_back(My_Effect(U"explode", rect.x + rect.w / 2, rect.y + rect.h / 2));
 
 			miss_scene++;
 		}
@@ -668,16 +763,86 @@ void Player::update_miss() {
 	}
 	else if (miss_scene == 101) {
 
-		if (miss_count > 3) {
+		if (miss_count > 2.5) {
 
 			//終了処理
 			miss = false;
 			miss_scene = 0;
 			miss_count = 0;
 
-			Print << U"pass";
+			
 		}
+
+    //ゲームオーバー爆発
+
+		gameover_explode_count += d_time;
+
+		if (gameover_explode_count > 0.3) {
+
+			for (int i = 0; i < 2; i++) {
+
+				int mini_x = rect.x + rect.w / 2;
+				int mini_y = rect.y + rect.h / 2;
+
+				bool random_x_plus_minus = 0;
+
+				random_x_plus_minus = Random(1);
+
+				int random_x_v = Random(60);
+
+				if (random_x_plus_minus == 0) {
+					mini_x -= random_x_v;
+				}
+				else if (random_x_plus_minus == 1) {
+					mini_x += random_x_v;
+				}
+
+
+				bool random_y_plus_minus = 0;
+
+				random_y_plus_minus = Random(1);
+
+				int random_y_v = Random(35);
+
+				if (random_y_plus_minus == 0) {
+					mini_y -= random_y_v;
+				}
+				else if (random_y_plus_minus == 1) {
+					mini_y += random_y_v;
+				}
+
+
+				my_effect.push_back(My_Effect(U"mini_explode", mini_x, mini_y));
+
+
+			}
+
+			gameover_explode_count = 0;
+		}
+
 	}
 
+	
+
+
+
+}
+
+void Player::update_my_effect() {
+
+	for (auto& e : my_effect) {
+		e.update(d_time);
+	}
+
+	my_effect.remove_if([&](My_Effect e) {
+
+		if (e.get_delete() == true) {
+			return true;
+		}
+
+	return false;
+
+
+	});
 
 }

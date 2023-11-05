@@ -19,6 +19,9 @@ void Game::update() {
 		else if (main_scene == U"gameover") {
 			update_gameover();
 		}
+		else if (main_scene == U"stageclear") {
+			update_stageclear();
+		}
 		else if (main_scene == U"develop") {
 			update_develop();
 		}

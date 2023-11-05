@@ -2,11 +2,11 @@
 
 # include <Siv3D.hpp> // Siv3D v0.6.12
 
-class Back {
+class Back_Ground {
 
 public:
 
-	Back();
+	Back_Ground();
 
 	void update(double);
 	void draw();

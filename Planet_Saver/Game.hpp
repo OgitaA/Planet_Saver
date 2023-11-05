@@ -6,7 +6,7 @@
 #include"Enemy.hpp"
 #include"Enemy_Bullet.hpp"
 #include"Item.hpp"
-#include"Back.hpp"
+#include"Back_Ground.hpp"
 #include"Back_Object_Data.hpp"
 #include"Back_Object.hpp"
 #include"Stage_Select_Box.hpp"
@@ -84,6 +84,7 @@ public:
 
 	void plus_score(int);
 
+	void go_stage_clear(double);
 	void go_gameover();
 
 	Player player;
@@ -93,7 +94,7 @@ public:
 	Array<Enemy_Bullet> enemy_bullet;
 	Array<Emerge_Item> emerge_item;
 	Array<Item> item;
-	Back back;
+	Back_Ground back_ground;
 	Array<Back_Object_Data> back_object_data;
 	Array<Back_Object> back_object;
 	Array<My_Effect> my_effect;
@@ -132,6 +133,9 @@ public:
 	void player_vs_enemy_bullet();
 	void player_barrier_enemy_bullet();
 
+	void make_enemy_by_enemy();
+	
+
 	//shader
 
 	PixelShader psWhite;
@@ -156,7 +160,8 @@ public:
 
 	//My_Effect
 	void update_my_effect(double);
-	void draw_my_effect();
+	void draw_my_effect_back();
+	void draw_my_effect_front();
 	void delete_my_effect();
 
 	//Explode
@@ -182,6 +187,8 @@ public:
 
 	double stage_scroll_speed_layer_0 = 100;
 	double stage_scroll_speed_layer_1 = 100;
+	double stage_scroll_speed_layer_2 = 100;
+	double stage_scroll_speed_layer_3 = 100;
 
 	double stage_up_scroll_speed = 50;
 
@@ -201,6 +208,8 @@ public:
 	void set_stage_1();
 	void set_stage_2();
 	void set_stage_3();
+
+	void set_back_object_first();
 
 
 	//Title
@@ -228,7 +237,13 @@ public:
 
 	bool gameover_once = false;
 
-	bool gameover_flag = false;
+
+	//StageClear
+	void update_stageclear();
+	void draw_stageclear();
+
+	bool stage_clear_flag = false;
+	double stage_clear_count = 0;
 
 	//Menu
 	void update_menu();

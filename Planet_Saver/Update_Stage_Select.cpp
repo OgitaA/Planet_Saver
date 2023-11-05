@@ -48,11 +48,17 @@ void Game::update_stage_select() {
 
 	if (KeyZ.down()) {
 
-		change_scene_battle();
-
 		stage = stage_select_cur + 1;
 
-		make_stage(stage);
+		//クリアしたステージと１つ先のステージを選べる
+		if (clear_stage+1 >= stage) {
+
+			change_scene_battle();
+		}
+		else {
+
+		}
+
 	}
 	else if (KeyX.down()) {
 

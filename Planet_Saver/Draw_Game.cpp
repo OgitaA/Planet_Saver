@@ -15,6 +15,10 @@ void Game::draw() {
 		draw_battle();
 		draw_gameover();
 	}
+	else if (main_scene == U"stageclear") {
+		draw_battle();
+		draw_stageclear();
+	}
 	else if (main_scene == U"develop") {
 		draw_develop();
 	}

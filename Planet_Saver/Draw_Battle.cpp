@@ -10,19 +10,28 @@ void Game::draw_battle() {
 
 	//Effect
 
-	draw_my_effect();
+	draw_my_effect_back();
 
 	draw_moji_effect();
 
 	//Object
 
+	
+	player.draw_barrier();
+
 	draw_player_bullet();
+
+	player.draw_sub();
 
 	draw_item();
 
 	draw_enemy();
 
 	draw_enemy_bullet();
+
+	//Effect
+
+	draw_my_effect_front();
 
 	player.draw();
 
@@ -75,10 +84,22 @@ void Game::draw_enemy_bullet() {
 
 void Game::draw_back() {
 
-	back.draw();
+	back_ground.draw();
 }
 
 void Game::draw_back_object() {
+
+	for (auto& o : back_object) {
+		if (o.get_layer() == 3) {
+			o.draw();
+		}
+	}
+
+	for (auto& o : back_object) {
+		if (o.get_layer() == 2) {
+			o.draw();
+		}
+	}
 
 	for (auto& o : back_object) {
 		if (o.get_layer() == 1) {
@@ -100,10 +121,21 @@ void Game::draw_item() {
 	}
 }
 
-void Game::draw_my_effect() {
+void Game::draw_my_effect_back() {
 
 	for (auto& e : my_effect) {
-		e.draw();
+		if (e.get_layer() == U"back") {
+			e.draw();
+		}
+	}
+}
+
+void Game::draw_my_effect_front() {
+
+	for (auto& e : my_effect) {
+		if (e.get_layer() == U"front") {
+			e.draw();
+		}
 	}
 }
 

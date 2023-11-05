@@ -23,12 +23,14 @@ void Player_Bullet::update(double _d_time) {
 
 void Player_Bullet::draw() {
 
-	TextureAsset(U"bullet").draw(circle.x - circle.r, circle.y - circle.r);
+	String image_name = U"player_bullet_" + name;
+
+	TextureAsset(image_name).draw(circle.x - circle.r, circle.y - circle.r,ColorF(1.0,1.0));
 }
 
 void Player_Bullet::move() {
 
-	if (name == U"normal") {
+	if (name == U"main" or name==U"sub") {
 		move_normal();
 	}
 }

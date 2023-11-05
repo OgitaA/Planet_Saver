@@ -23,6 +23,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -115,7 +116,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Back.cpp" />
+    <ClCompile Include="Back_Ground.cpp" />
     <ClCompile Include="Back_Object.cpp" />
     <ClCompile Include="Barrier.cpp" />
     <ClCompile Include="Catcher.cpp" />
@@ -125,12 +126,17 @@
     <ClCompile Include="Draw_Develop.cpp" />
     <ClCompile Include="Draw_Game.cpp" />
     <ClCompile Include="Draw_Gameover.cpp" />
+    <ClCompile Include="Draw_Stageclear.cpp" />
     <ClCompile Include="Draw_Stage_Select.cpp" />
     <ClCompile Include="Draw_Title.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enemy_Bullet.cpp" />
+    <ClCompile Include="Enemy_Move_1.cpp" />
+    <ClCompile Include="Enemy_Move_2.cpp" />
+    <ClCompile Include="Enemy_Move_3.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Make_Enemy_By_Enemy.cpp" />
     <ClCompile Include="Make_Enemy_Shot.cpp" />
     <ClCompile Include="Make_Player_Shot.cpp" />
     <ClCompile Include="Make_Stage.cpp" />
@@ -150,6 +156,7 @@
     <ClCompile Include="Update_Game.cpp" />
     <ClCompile Include="Update_Gameover.cpp" />
     <ClCompile Include="Update_Stage.cpp" />
+    <ClCompile Include="Update_Stageclear.cpp" />
     <ClCompile Include="Update_Stage_Select.cpp" />
     <ClCompile Include="Update_Title.cpp" />
   </ItemGroup>
@@ -347,7 +354,7 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Back.hpp" />
+    <ClInclude Include="Back_Ground.hpp" />
     <ClInclude Include="Back_Object.hpp" />
     <ClInclude Include="Back_Object_Data.hpp" />
     <ClInclude Include="Barrier.hpp" />

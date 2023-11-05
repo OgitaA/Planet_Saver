@@ -17,21 +17,105 @@ void My_Effect::set_up() {
 	}
 	else if (name == U"explode") {
 
-		w = 100;
-		h = 100;
+		w = 500;
+		h = 500;
 
 		//初期サイズ
-		size = 1;
+		size = 0.28;
 
 		size_up = 0;
 
-		delete_count = 0.5;
+		delete_count = 0.3;
 
 
 
 		anime_use = true;
 
-		page_max = 5;
+		page_max = 7;
+	}
+	else if (name == U"mini_explode") {
+
+		w = 500;
+		h = 500;
+
+		//初期サイズ
+		size = 0.14;
+
+		size_up = 0;
+
+		delete_count = 0.3;
+
+
+
+		anime_use = true;
+
+		page_max = 7;
+
+		name = U"explode";
+	}
+	else if (name == U"middle_explode") {
+
+		w = 500;
+		h = 500;
+
+		//初期サイズ
+		size = 0.3;
+
+		size_up = 0;
+
+		delete_count = 0.3;
+
+
+
+		anime_use = true;
+
+		page_max = 7;
+
+		name = U"explode";
+	}
+	else if (name == U"explode_custom_1.5") {
+
+		w = 500;
+		h = 500;
+
+		//初期サイズ
+		size = 0.42;
+
+		size_up = 0;
+
+		delete_count = 0.3;
+
+
+
+		anime_use = true;
+
+		page_max = 7;
+
+		name = U"explode";
+	}
+	else if (name == U"explode_custom_2") {
+
+		w = 500;
+		h = 500;
+
+		//初期サイズ
+		size = 0.28;
+
+		size_up = 0;
+
+		delete_count = 0.3;
+
+
+
+		anime_use = true;
+
+		page_max = 7;
+
+		name = U"explode";
+	}
+	else if (name == U"player_explode") {
+
+
 	}
 
 
@@ -91,6 +175,8 @@ void My_Effect::draw() {
 		String image_name = U"effect_" + name + U"_" + Format(page);
 
 		TextureAsset(image_name).scaled(size).draw(x - adjust_x, y - adjust_y, ColorF(1.0, 1));
+
+		
 
 	}
 }

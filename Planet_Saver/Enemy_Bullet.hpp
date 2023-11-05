@@ -33,4 +33,6 @@ private:
 
 	double angle;
 
+	String move_type = U"normal";
+
 };

@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+# include <Siv3D.hpp> // Siv3D v0.6.12
+
 class My_Effect {
 
 public:
@@ -8,6 +10,16 @@ public:
 		name = _name;
 		x = _x;
 		y = _y;
+
+		set_up();
+	}
+
+	My_Effect(String _name, double _x, double _y,String _layer) {
+		name = _name;
+		x = _x;
+		y = _y;
+
+		layer = _layer;
 
 		set_up();
 	}
@@ -24,6 +36,8 @@ public:
 		}
 		return false;
 	}
+
+	String get_layer() { return layer; }
 
 private:
 
@@ -49,6 +63,7 @@ private:
 	double size_up = 0;//一秒あたりの増加量
 	double size_down = 0;
 
+	String layer = U"back";
 
 	//Anime
 	bool anime_use = false;

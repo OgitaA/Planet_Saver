@@ -21,6 +21,8 @@ void Game::update_se_main(double d_time) {
 //鳴らす
 void Game::play_se_main() {
 
+	/*
+
 	double volume = double(se_volume) / double(10);
 
 	for (size_t s = 0; s < se_will.size(); s++) {
@@ -33,6 +35,8 @@ void Game::play_se_main() {
 		}
 	}
 
+
+*/
 	se_will.clear();
 }
 
@@ -43,7 +47,7 @@ void Game::play_se_main() {
 
 //BGMスタート
 void Game::play_bgm(int v) {
-	AudioAsset(bgm[v]).play();
+	//AudioAsset(bgm[v]).play();
 }
 
 

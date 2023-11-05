@@ -244,6 +244,18 @@
     <Filter Include="Source Files\Game\Gameover">
       <UniqueIdentifier>{2fb1c778-66bd-40c2-a8e5-4795f536c455}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\Stageclear">
+      <UniqueIdentifier>{62123a82-b077-4c48-852a-043392144039}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Battle\Object\Enemy\Stage_1">
+      <UniqueIdentifier>{f816258a-e57f-4196-b3bb-25b1de695166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Battle\Object\Enemy\Stage_2">
+      <UniqueIdentifier>{5ca5a1f3-4a5f-4658-81c5-d06060e174fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Battle\Object\Enemy\Stage_3">
+      <UniqueIdentifier>{427d8712-f371-4e00-a76a-bdded404ad3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -252,7 +264,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Back.cpp">
+    <ClCompile Include="Back_Ground.cpp">
       <Filter>Source Files\Game\Battle\Object\Back</Filter>
     </ClCompile>
     <ClCompile Include="Back_Object.cpp">
@@ -347,6 +359,24 @@
     </ClCompile>
     <ClCompile Include="Draw_Gameover.cpp">
       <Filter>Source Files\Game\Gameover</Filter>
+    </ClCompile>
+    <ClCompile Include="Update_Stageclear.cpp">
+      <Filter>Source Files\Game\Stageclear</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw_Stageclear.cpp">
+      <Filter>Source Files\Game\Stageclear</Filter>
+    </ClCompile>
+    <ClCompile Include="Make_Enemy_By_Enemy.cpp">
+      <Filter>Source Files\Game\Battle\Function</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Move_1.cpp">
+      <Filter>Source Files\Game\Battle\Object\Enemy\Stage_1</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Move_2.cpp">
+      <Filter>Source Files\Game\Battle\Object\Enemy\Stage_2</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Move_3.cpp">
+      <Filter>Source Files\Game\Battle\Object\Enemy\Stage_3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -983,7 +1013,7 @@
     <ClInclude Include="Game.hpp">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Back.hpp">
+    <ClInclude Include="Back_Ground.hpp">
       <Filter>Source Files\Game\Battle\Object\Back</Filter>
     </ClInclude>
     <ClInclude Include="Back_Object.hpp">

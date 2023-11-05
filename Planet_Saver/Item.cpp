@@ -8,7 +8,7 @@ Item::Item(String _name, double _x, double _y) {
 
 	rect = Rect(_x, _y, 100, 100);
 
-	speed = 300;
+	speed = 500;
 
 	
 }
@@ -77,11 +77,32 @@ void Item::set_data() {
 	}
 	else if (U"bag" == name) {
 
-		type = U"non_burn";
+		type = U"burn";
+		shape = U"Rect";
+	}
+	else if (U"plastic_bag"==name) {
+
+		type = U"burn";
+		shape = U"Rect";
+	}
+	else if (U"beer_bottle" == name) {
+
+		type = U"recycle";
+		shape = U"Rect";
+	}
+	else if (U"danbo" == name) {
+
+		type = U"recycle";
+		shape = U"Rect";
+	}
+	else if (U"milk" == name) {
+
+		type = U"recycle";
 		shape = U"Rect";
 	}
 
-
+	//位置調整
+	rect.y -= rect.h / 2;
 }
 
 void Item::update(double _d_time) {

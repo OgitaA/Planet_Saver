@@ -72,7 +72,7 @@ public:
 
 	int get_layer() { return layer; }
 
-	
+	double get_emerge_count() { return emerge_count; }
 
 private:
 
