@@ -48,7 +48,7 @@ public:
 
 	//Common
 	int stage = 1;
-	int clear_stage = 3;
+	int clear_stage = 0;
 
 	void draw_indention(Font, String, int, int, int);
 
